@@ -11,6 +11,7 @@ public class BankAccount {
     private String currencyName;
     private double balance;
     private String owner;
+    private Bank bank;
     private Condition condition;
 
     public BankAccount(String name, String iban, String currencyName, double balance, String owner, Condition condition) {
