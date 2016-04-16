@@ -1,6 +1,10 @@
 package com.antypaymentguard.databaseHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.antypaymentguard.model.Bank;
 
 /**
  * @author Kamil Walkowiak
@@ -25,6 +29,18 @@ public class BankDatabaseHelper {
 
     public BankDatabaseHelper(Context context) {
         databaseHelper = DatabaseHelper.getInstance(context);
+    }
+
+    public void createBank(Bank bank) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_NAME, bank.getName());
+        values.put(COLUMN_SESSION_ID, bank.getSessionId());
+        values.put(COLUMN_SESSION_ID_SIGNATURE, bank.getSessionIdSignature());
+
+        db.insert(TABLE_NAME, null, values);
+        db.close();
     }
 
 }

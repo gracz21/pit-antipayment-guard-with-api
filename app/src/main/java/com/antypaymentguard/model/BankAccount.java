@@ -43,6 +43,10 @@ public class BankAccount {
         return owner;
     }
 
+    public Bank getBank() {
+        return bank;
+    }
+
     public Condition getCondition() {
         return condition;
     }

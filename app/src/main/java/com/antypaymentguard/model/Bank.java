@@ -4,6 +4,7 @@ package com.antypaymentguard.model;
  * @author Kamil Walkowiak
  */
 public class Bank {
+    private long id;
     private String name;
     private String sessionId;
     private String sessionIdSignature;
@@ -12,6 +13,10 @@ public class Bank {
         this.name = name;
         this.sessionId = sessionId;
         this.sessionIdSignature = sessionIdSignature;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -24,6 +29,10 @@ public class Bank {
 
     public String getSessionIdSignature() {
         return sessionIdSignature;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setName(String name) {

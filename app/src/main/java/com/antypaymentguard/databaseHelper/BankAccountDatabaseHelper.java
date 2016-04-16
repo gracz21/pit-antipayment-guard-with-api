@@ -1,6 +1,10 @@
 package com.antypaymentguard.databaseHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.antypaymentguard.model.BankAccount;
 
 /**
  * @author Kamil Walkowiak
@@ -22,7 +26,6 @@ public class BankAccountDatabaseHelper {
     static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             COLUMN_NAME + " TEXT NOT NULL, " +
-            COLUMN_NAME + " TEXT NOT NULL, " +
             COLUMN_IBAN + " TEXT NOT NULL, " +
             COLUMN_CURRENCY_NAME + " TEXT NOT NULL, " +
             COLUMN_BALANCE + " DOUBLE NOT NULL, " +
@@ -38,5 +41,21 @@ public class BankAccountDatabaseHelper {
 
     public BankAccountDatabaseHelper(Context context) {
         this.databaseHelper = DatabaseHelper.getInstance(context);
+    }
+
+    public void createBankAccount(BankAccount bankAccount) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_NAME, bankAccount.getName());
+        values.put(COLUMN_IBAN, bankAccount.getIban());
+        values.put(COLUMN_CURRENCY_NAME, bankAccount.getCurrencyName());
+        values.put(COLUMN_BALANCE, bankAccount.getBalance());
+        values.put(COLUMN_OWNER, bankAccount.getOwner());
+        values.put(COLUMN_BANK_ID, bankAccount.getBank().getId());
+        values.put(COLUMN_CONDITION_ID, bankAccount.getCondition().getId());
+
+        db.insert(TABLE_NAME, null, values);
+        db.close();
     }
 }
