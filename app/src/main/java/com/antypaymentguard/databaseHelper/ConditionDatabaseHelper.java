@@ -15,12 +15,23 @@ import com.antypaymentguard.model.condition.NumberCondition;
 public class ConditionDatabaseHelper {
     private DatabaseHelper databaseHelper;
 
-    public static final String TABLE_NAME = "conditions";
+    static final String TABLE_NAME = "conditions";
+    static final String COLUMN_ID = "_id";
 
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_TRANSACTIONS_AMOUNT = "transactionsAmount";
-    public static final String COLUMN_TRANSACTIONS_NUMBER = "transactionsNumber";
-    public static final String COLUMN_TYPE = "type";
+    private static final String COLUMN_TRANSACTIONS_AMOUNT = "transactions_amount";
+    private static final String COLUMN_TRANSACTIONS_NUMBER = "transactions_number";
+    private static final String COLUMN_TYPE = "type";
+
+    static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            COLUMN_TRANSACTIONS_AMOUNT + " DOUBLE, " +
+            COLUMN_TRANSACTIONS_NUMBER + " INTEGER, " +
+            COLUMN_TYPE + " TEXT NOT NULL " +
+            "CHECK (" + COLUMN_TYPE +
+            " IN ('" + NumberCondition.class.getSimpleName() + "', '" + AmountCondition.class.getSimpleName() + "'))," +
+            "CHECK (" + COLUMN_TRANSACTIONS_AMOUNT + " IS NOT NULL OR " + COLUMN_TRANSACTIONS_NUMBER + " IS NOT NULL))";
+
+    static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     public ConditionDatabaseHelper(Context context) {
         this.databaseHelper = DatabaseHelper.getInstance(context.getApplicationContext());
