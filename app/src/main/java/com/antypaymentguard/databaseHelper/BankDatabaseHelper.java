@@ -2,9 +2,15 @@ package com.antypaymentguard.databaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.antypaymentguard.model.Bank;
+import com.antypaymentguard.model.BankAccount;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * @author Kamil Walkowiak
@@ -15,9 +21,9 @@ public class BankDatabaseHelper {
     static final String TABLE_NAME = "banks";
     static final String COLUMN_ID = "_id";
 
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_SESSION_ID = "session_id";
-    private static final String COLUMN_SESSION_ID_SIGNATURE = "session_id_signature";
+    static final String COLUMN_NAME = "name";
+    static final String COLUMN_SESSION_ID = "session_id";
+    static final String COLUMN_SESSION_ID_SIGNATURE = "session_id_signature";
 
     static final String CREATE_TABLE_BANKS = "CREATE TABLE " + TABLE_NAME + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -41,6 +47,31 @@ public class BankDatabaseHelper {
 
         db.insert(TABLE_NAME, null, values);
         db.close();
+    }
+
+    public List<Bank> getAllBanks() {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        List<Bank> banks = new ArrayList<>();
+
+        String selectQuery = String.format("SELECT * FROM %s", TABLE_NAME);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(1);
+                String sessionId = cursor.getString(2);
+                String sessionIdSignature = cursor.getString(3);
+
+                Bank bank = new Bank(name, sessionId, sessionIdSignature);
+                bank.setId(cursor.getLong(0));
+                banks.add(bank);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return banks;
     }
 
 }

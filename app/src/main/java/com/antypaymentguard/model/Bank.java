@@ -12,11 +12,10 @@ public class Bank {
     private String sessionIdSignature;
     private List<BankAccount> bankAccounts;
 
-    public Bank(String name, String sessionId, String sessionIdSignature, List<BankAccount> bankAccounts) {
+    public Bank(String name, String sessionId, String sessionIdSignature) {
         this.name = name;
         this.sessionId = sessionId;
         this.sessionIdSignature = sessionIdSignature;
-        this.bankAccounts = bankAccounts;
     }
 
     public long getId() {
@@ -53,5 +52,9 @@ public class Bank {
 
     public void setSessionIdSignature(String sessionIdSignature) {
         this.sessionIdSignature = sessionIdSignature;
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 }

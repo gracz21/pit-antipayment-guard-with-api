@@ -18,9 +18,9 @@ public class ConditionDatabaseHelper {
     static final String TABLE_NAME = "conditions";
     static final String COLUMN_ID = "_id";
 
-    private static final String COLUMN_TRANSACTIONS_AMOUNT = "transactions_amount";
-    private static final String COLUMN_TRANSACTIONS_NUMBER = "transactions_number";
-    private static final String COLUMN_TYPE = "type";
+    static final String COLUMN_TRANSACTIONS_AMOUNT = "transactions_amount";
+    static final String COLUMN_TRANSACTIONS_NUMBER = "transactions_number";
+    static final String COLUMN_TYPE = "type";
 
     static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +

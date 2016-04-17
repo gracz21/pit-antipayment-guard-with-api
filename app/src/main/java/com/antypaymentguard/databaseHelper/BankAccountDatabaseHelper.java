@@ -2,9 +2,17 @@ package com.antypaymentguard.databaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.antypaymentguard.model.Bank;
 import com.antypaymentguard.model.BankAccount;
+import com.antypaymentguard.model.condition.AmountCondition;
+import com.antypaymentguard.model.condition.Condition;
+import com.antypaymentguard.model.condition.NumberCondition;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Kamil Walkowiak
@@ -15,13 +23,14 @@ public class BankAccountDatabaseHelper {
     static final String TABLE_NAME = "bank_accounts";
     static final String COLUMN_ID = "_id";
 
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_IBAN = "iban";
-    private static final String COLUMN_CURRENCY_NAME = "currency_name";
-    private static final String COLUMN_BALANCE = "balance";
-    private static final String COLUMN_OWNER = "owner";
-    private static final String COLUMN_BANK_ID = "bank_id";
-    private static final String COLUMN_CONDITION_ID = "condition_id";
+    static final String COLUMN_NAME = "name";
+    static final String COLUMN_IBAN = "iban";
+    static final String COLUMN_CURRENCY_NAME = "currency_name";
+    static final String COLUMN_BALANCE = "balance";
+    static final String COLUMN_OWNER = "owner";
+
+    static final String COLUMN_BANK_ID = "bank_id";
+    static final String COLUMN_CONDITION_ID = "condition_id";
 
     static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -57,5 +66,48 @@ public class BankAccountDatabaseHelper {
 
         db.insert(TABLE_NAME, null, values);
         db.close();
+    }
+
+    public List<BankAccount> getBankAccountsByBank(Bank bank) {
+        List<BankAccount> bankAccounts = new ArrayList<>();
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String selectQuery = String.format("SELECT * FROM %s a JOIN %s b ON a.%s = b.%s WHERE %s = %s",
+                TABLE_NAME, ConditionDatabaseHelper.TABLE_NAME, COLUMN_CONDITION_ID, ConditionDatabaseHelper.COLUMN_ID,
+                COLUMN_BANK_ID, bank.getId());
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Condition condition = fetchConditionFromCursor(cursor);
+                String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+                String iban = cursor.getString(cursor.getColumnIndex(COLUMN_IBAN));
+                String currency = cursor.getString(cursor.getColumnIndex(COLUMN_CURRENCY_NAME));
+                double balance = cursor.getDouble(cursor.getColumnIndex(COLUMN_BALANCE));
+                String owner = cursor.getString(cursor.getColumnIndex(COLUMN_OWNER));
+
+                bankAccounts.add(new BankAccount(name, iban, currency, balance, owner, bank, condition));
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return bankAccounts;
+    }
+
+    private Condition fetchConditionFromCursor(Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndex(COLUMN_CONDITION_ID));
+
+
+        Condition condition;
+        if(cursor.isNull(cursor.getColumnIndex(ConditionDatabaseHelper.COLUMN_TRANSACTIONS_NUMBER))) {
+            double transactionsAmount = cursor.getDouble(cursor.getColumnIndex(ConditionDatabaseHelper.COLUMN_TRANSACTIONS_AMOUNT));
+            condition = new AmountCondition(id, transactionsAmount);
+        } else {
+            int transactionsNumber = cursor.getInt(cursor.getColumnIndex(ConditionDatabaseHelper.COLUMN_TRANSACTIONS_NUMBER));
+            condition = new NumberCondition(id, transactionsNumber);
+        }
+
+        return condition;
     }
 }
