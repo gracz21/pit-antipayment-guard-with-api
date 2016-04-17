@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AddBankAccount"
+            android:name=".activity.addBankAccount.AddBankAccount"
             android:label="@string/title_activity_add_bank_account"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
