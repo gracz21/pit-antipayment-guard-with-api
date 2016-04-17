@@ -14,6 +14,13 @@ public class BankAccount {
     private Bank bank;
     private Condition condition;
 
+
+    public BankAccount(String name, String iban, double balance) {
+        this.name = name;
+        this.iban = iban;
+        this.balance = balance;
+    }
+
     public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank, Condition condition) {
         this.name = name;
         this.iban = iban;

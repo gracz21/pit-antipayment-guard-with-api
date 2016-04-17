@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 
 import com.antypaymentguard.R;
+import com.antypaymentguard.adapter.BankAccountAdapter;
 import com.antypaymentguard.databaseHelper.BankAccountDatabaseHelper;
 import com.antypaymentguard.databaseHelper.BankDatabaseHelper;
 import com.antypaymentguard.databaseHelper.ConditionDatabaseHelper;
@@ -20,9 +23,72 @@ import com.antypaymentguard.model.Bank;
 import com.antypaymentguard.model.BankAccount;
 import com.antypaymentguard.model.condition.Condition;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ExpandableListView.OnChildClickListener {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //setupMock();
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        assert floatingActionButton != null;
+        floatingActionButton.setOnClickListener(this);
+
+        prepareListData();
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        BankAccountAdapter adapter = new BankAccountAdapter(this, listDataHeader, listDataChild);
+        expandableListView.setAdapter(adapter);
+        expandableListView.setOnChildClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new FetchBanksTask().execute();
+    }
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(MainActivity.this, SignInToBank.class));
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+        Snackbar.make(view, "Great! You selected bank account ;D", Snackbar.LENGTH_SHORT).show();
+        return false;
+    }
+
+    private class FetchBanksTask extends AsyncTask<Void, Void, List<Bank>> {
+        @Override
+        protected List<Bank> doInBackground(Void... params) {
+            BankDatabaseHelper bankDatabaseHelper = new BankDatabaseHelper(getApplicationContext());
+            BankAccountDatabaseHelper bankAccountDatabaseHelper = new BankAccountDatabaseHelper(getApplicationContext());
+            List<Bank> banks = bankDatabaseHelper.getAllBanks();
+
+            for (Bank bank : banks) {
+                bank.setBankAccounts(bankAccountDatabaseHelper.getBankAccountsByBank(bank));
+            }
+            return banks;
+        }
+
+        @Override
+        protected void onPostExecute(List<Bank> banks) {
+            for (Bank bank : banks) {
+                Log.d("Bank: ", bank.getName() + ", " + bank.getSessionId() + ", " + bank.getSessionIdSignature());
+                for (BankAccount bankAccount : bank.getBankAccounts()) {
+                    Log.d("Bank Account: ", bankAccount.getName() + ", " + bankAccount.getIban() + ", " + bankAccount.getCurrencyName());
+                    Log.d("Condition: ", bankAccount.getCondition().getClass().getSimpleName());
+                }
+            }
+        }
+    }
 
     private void setupMock() {
         BankDatabaseHelper bankDatabaseHelper = new BankDatabaseHelper(getApplicationContext());
@@ -44,75 +110,28 @@ public class MainActivity extends AppCompatActivity {
         bankAccountDatabaseHelper.createBankAccount(new BankAccount("TestA3", "3", "PLN", 20.0, "Test", bank1, condition));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    private void prepareListData() {
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
 
-        //setupMock();
+        listDataHeader.add("Bank 1");
+        listDataHeader.add("Bank 2");
+        listDataHeader.add("Bank 3");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SignInToBank.class));
-            }
-        });
+        List<BankAccount> top250 = new ArrayList<>();
+        top250.add(new BankAccount("Konto 1", "1234 1234 1234 1234", 123));
+        top250.add(new BankAccount("Konto 2", "1234 1234 1234 1234", 56154));
+
+
+        List<BankAccount> nowShowing = new ArrayList<>();
+        nowShowing.add(new BankAccount("Konto 1", "1234 1234 1234 1234", 165));
+        nowShowing.add(new BankAccount("Konto 2", "1234 1234 1234 1234", 45564));
+        nowShowing.add(new BankAccount("Konto 3", "1234 1234 1234 1234", 4354));
+
+        listDataChild.put(listDataHeader.get(0), top250);
+        listDataChild.put(listDataHeader.get(1), nowShowing);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        (new FetchBanksTask()).execute();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private class FetchBanksTask extends AsyncTask<Void, Void, List<Bank>> {
-        @Override
-        protected List<Bank> doInBackground(Void... params) {
-            BankDatabaseHelper bankDatabaseHelper = new BankDatabaseHelper(getApplicationContext());
-            BankAccountDatabaseHelper bankAccountDatabaseHelper = new BankAccountDatabaseHelper(getApplicationContext());
-            List<Bank> banks = bankDatabaseHelper.getAllBanks();
-
-            for(Bank bank: banks) {
-                bank.setBankAccounts(bankAccountDatabaseHelper.getBankAccountsByBank(bank));
-            }
-            return banks;
-        }
-
-        @Override
-        protected void onPostExecute(List<Bank> banks) {
-            for(Bank bank: banks) {
-                Log.d("Bank: ", bank.getName() + ", " + bank.getSessionId() + ", " + bank.getSessionIdSignature());
-                for(BankAccount bankAccount: bank.getBankAccounts()) {
-                    Log.d("Bank Account: ", bankAccount.getName() + ", " + bankAccount.getIban() + ", " + bankAccount.getCurrencyName());
-                    Log.d("Condition: ", bankAccount.getCondition().getClass().getSimpleName());
-                }
-            }
-        }
-    }
+    private List<String> listDataHeader = new ArrayList<>();
+    private HashMap<String, List<BankAccount>> listDataChild = new HashMap<>();
 }
