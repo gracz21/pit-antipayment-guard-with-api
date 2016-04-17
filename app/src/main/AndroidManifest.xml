@@ -19,13 +19,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.addBankAccount.AddBankAccount"
-            android:label="@string/title_activity_add_bank_account"
+            android:name=".activity.SignInToBank"
+            android:label="@string/title_activity_sign_in_to_bank"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.antypaymentguard.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.AddBankAccount"
+            android:label="@string/title_activity_add_bank_account"
+            android:parentActivityName=".activity.SignInToBank"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.antypaymentguard.activity.SignInToBank" />
         </activity>
     </application>
 

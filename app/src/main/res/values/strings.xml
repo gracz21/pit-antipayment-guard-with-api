@@ -2,10 +2,8 @@
     <string name="app_name">Antypayment Guard</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_bank_account">Add bank account</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="authenticate_tab">1\nAuthenticate</string>
-    <string name="set_accounts_tab">2\nSet accounts</string>
-    <string name="set_conditions_tab">3\nSet conditions</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="sing_in">Sing in</string>
+    <string name="title_activity_sign_in_to_bank">SignIn To Bank</string>
 </resources>

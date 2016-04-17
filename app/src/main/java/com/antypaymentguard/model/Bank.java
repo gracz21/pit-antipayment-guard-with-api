@@ -1,5 +1,7 @@
 package com.antypaymentguard.model;
 
+import java.util.List;
+
 /**
  * @author Kamil Walkowiak
  */
@@ -8,11 +10,13 @@ public class Bank {
     private String name;
     private String sessionId;
     private String sessionIdSignature;
+    private List<BankAccount> bankAccounts;
 
-    public Bank(String name, String sessionId, String sessionIdSignature) {
+    public Bank(String name, String sessionId, String sessionIdSignature, List<BankAccount> bankAccounts) {
         this.name = name;
         this.sessionId = sessionId;
         this.sessionIdSignature = sessionIdSignature;
+        this.bankAccounts = bankAccounts;
     }
 
     public long getId() {
@@ -29,6 +33,10 @@ public class Bank {
 
     public String getSessionIdSignature() {
         return sessionIdSignature;
+    }
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
     }
 
     public void setId(long id) {

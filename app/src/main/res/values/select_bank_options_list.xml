@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_bank_options_list">
+        <item>Alior Bank</item>
+        <item>T-Mobile UB</item>
+        <item>Bank BGZ</item>
+        <item>Bank BPH</item>
+        <item>Bank Millennium</item>
+        <item>Bank Pekao SA</item>
+        <item>Bank Pocztowy</item>
+        <item>BZ WBK</item>
+        <item>BNP Paribas</item>
+        <item>BOŚ Bank</item>
+        <item>Citi Handlowy</item>
+        <item>Credit Agricole</item>
+        <item>Deutsche Bank</item>
+        <item>Eurobank</item>
+        <item>Getin Bank</item>
+        <item>Getin Online</item>
+        <item>Idea Bank</item>
+        <item>ING Bank Slaski</item>
+        <item>Inteligo</item>
+        <item>mBank</item>
+        <item>Nordea Bank</item>
+        <item>Open Finance</item>
+        <item>PKO Polish Bank</item>
+        <item>Raiffeisen Bank Poland</item>
+        <item>Smart</item>
+    </string-array>
+</resources>
