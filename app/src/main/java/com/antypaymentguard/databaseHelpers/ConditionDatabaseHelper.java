@@ -1,13 +1,13 @@
-package com.antypaymentguard.databaseHelper;
+package com.antypaymentguard.databaseHelpers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.antypaymentguard.model.condition.AmountCondition;
-import com.antypaymentguard.model.condition.Condition;
-import com.antypaymentguard.model.condition.NumberCondition;
+import com.antypaymentguard.models.conditions.AmountCondition;
+import com.antypaymentguard.models.conditions.Condition;
+import com.antypaymentguard.models.conditions.NumberCondition;
 
 /**
  * @author Kamil Walkowiak

@@ -1,6 +1,6 @@
-package com.antypaymentguard.model;
+package com.antypaymentguard.models;
 
-import com.antypaymentguard.model.condition.Condition;
+import com.antypaymentguard.models.conditions.Condition;
 
 /**
  * @author Kamil Walkowiak

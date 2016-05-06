@@ -1,4 +1,4 @@
-package com.antypaymentguard.adapter;
+package com.antypaymentguard.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -9,7 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.antypaymentguard.R;
-import com.antypaymentguard.model.BankAccount;
+import com.antypaymentguard.models.BankAccount;
 
 import java.util.HashMap;
 import java.util.List;

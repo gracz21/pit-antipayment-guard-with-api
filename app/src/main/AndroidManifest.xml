@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,22 +19,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SignInToBank"
+            android:name=".activities.SignInToBank"
             android:label="@string/title_activity_sign_in_to_bank"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.antypaymentguard.activity.MainActivity" />
+                android:value="com.antypaymentguard.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.AddBankAccount"
+            android:name=".activities.AddBankAccount"
             android:label="@string/title_activity_add_bank_account"
-            android:parentActivityName=".activity.SignInToBank"
+            android:parentActivityName=".activities.SignInToBank"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.antypaymentguard.activity.SignInToBank" />
+                android:value="com.antypaymentguard.activities.SignInToBank" />
         </activity>
     </application>
 

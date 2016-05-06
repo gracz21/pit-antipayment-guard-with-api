@@ -1,4 +1,4 @@
-package com.antypaymentguard.databaseHelper;
+package com.antypaymentguard.databaseHelpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

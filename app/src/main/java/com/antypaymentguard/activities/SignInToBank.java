@@ -1,4 +1,4 @@
-package com.antypaymentguard.activity;
+package com.antypaymentguard.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

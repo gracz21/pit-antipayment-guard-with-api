@@ -1,4 +1,4 @@
-package com.antypaymentguard.activity;
+package com.antypaymentguard.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,19 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
 import com.antypaymentguard.R;
-import com.antypaymentguard.adapter.BankAccountAdapter;
-import com.antypaymentguard.databaseHelper.BankAccountDatabaseHelper;
-import com.antypaymentguard.databaseHelper.BankDatabaseHelper;
-import com.antypaymentguard.databaseHelper.ConditionDatabaseHelper;
-import com.antypaymentguard.databaseHelper.DatabaseHelper;
-import com.antypaymentguard.model.Bank;
-import com.antypaymentguard.model.BankAccount;
-import com.antypaymentguard.model.condition.Condition;
+import com.antypaymentguard.adapters.BankAccountAdapter;
+import com.antypaymentguard.databaseHelpers.BankAccountDatabaseHelper;
+import com.antypaymentguard.databaseHelpers.BankDatabaseHelper;
+import com.antypaymentguard.databaseHelpers.ConditionDatabaseHelper;
+import com.antypaymentguard.models.Bank;
+import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.models.conditions.Condition;
 
 import java.util.ArrayList;
 import java.util.HashMap;

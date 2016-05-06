@@ -1,16 +1,14 @@
-package com.antypaymentguard.databaseHelper;
+package com.antypaymentguard.databaseHelpers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.antypaymentguard.model.Bank;
-import com.antypaymentguard.model.BankAccount;
+import com.antypaymentguard.models.Bank;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * @author Kamil Walkowiak

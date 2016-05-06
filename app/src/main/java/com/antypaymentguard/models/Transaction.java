@@ -1,4 +1,4 @@
-package com.antypaymentguard.model;
+package com.antypaymentguard.models;
 
 import java.util.Date;
 
