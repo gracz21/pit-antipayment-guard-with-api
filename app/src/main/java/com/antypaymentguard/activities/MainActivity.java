@@ -11,23 +11,29 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 
+import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankAccountAdapter;
-import com.antypaymentguard.databaseHelpers.BankAccountDatabaseHelper;
-import com.antypaymentguard.databaseHelpers.BankDatabaseHelper;
-import com.antypaymentguard.databaseHelpers.ConditionDatabaseHelper;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
 import com.antypaymentguard.models.conditions.Condition;
+import com.antypaymentguard.models.conditions.NumberCondition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ExpandableListView.OnChildClickListener {
+    private List<String> listDataHeader;
+    private HashMap<String, List<BankAccount>> listDataChild;
+    private BankAccountAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,9 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assert floatingActionButton != null;
         floatingActionButton.setOnClickListener(this);
 
-        prepareListData();
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        BankAccountAdapter adapter = new BankAccountAdapter(this, listDataHeader, listDataChild);
+        adapter = new BankAccountAdapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(adapter);
         expandableListView.setOnChildClickListener(this);
     }
@@ -62,73 +67,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    private class FetchBanksTask extends AsyncTask<Void, Void, List<Bank>> {
+    private class FetchBanksTask extends AsyncTask<Void, Void, Map<String, List<BankAccount>>> {
         @Override
-        protected List<Bank> doInBackground(Void... params) {
-            BankDatabaseHelper bankDatabaseHelper = new BankDatabaseHelper(getApplicationContext());
-            BankAccountDatabaseHelper bankAccountDatabaseHelper = new BankAccountDatabaseHelper(getApplicationContext());
-            List<Bank> banks = bankDatabaseHelper.getAllBanks();
-
-            for (Bank bank : banks) {
-                bank.setBankAccounts(bankAccountDatabaseHelper.getBankAccountsByBank(bank));
+        protected Map<String, List<BankAccount>> doInBackground(Void... params) {
+            Map<String, List<BankAccount>> result = new HashMap<>();
+            List<Bank> banks = new Select().from(Bank.class).execute();
+            for(Bank bank: banks) {
+                result.put(bank.getName(), bank.getBankAccounts());
             }
-            return banks;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(List<Bank> banks) {
-            for (Bank bank : banks) {
-                Log.d("Bank: ", bank.getName() + ", " + bank.getSessionId() + ", " + bank.getSessionIdSignature());
-                for (BankAccount bankAccount : bank.getBankAccounts()) {
-                    Log.d("Bank Account: ", bankAccount.getName() + ", " + bankAccount.getIban() + ", " + bankAccount.getCurrencyName());
-                    Log.d("Condition: ", bankAccount.getCondition().getClass().getSimpleName());
-                }
-            }
+        protected void onPostExecute(Map<String, List<BankAccount>> hashMap) {
+            listDataHeader.addAll(hashMap.keySet());
+            listDataChild.putAll(hashMap);
+            adapter.notifyDataSetChanged();
         }
     }
 
     private void setupMock() {
-        BankDatabaseHelper bankDatabaseHelper = new BankDatabaseHelper(getApplicationContext());
-        BankAccountDatabaseHelper bankAccountDatabaseHelper = new BankAccountDatabaseHelper(getApplicationContext());
-        ConditionDatabaseHelper conditionDatabaseHelper = new ConditionDatabaseHelper(getApplicationContext());
 
-        Bank bank1 = new Bank("Test1", "test", "test");
-        bank1.setId(1);
+        Bank bank1 = new Bank("Test", "Test", "Test");
+        bank1.save();
         Bank bank2 = new Bank("Test2", "test", "test");
-        bank2.setId(2);
+        bank2.save();
 
-        bankDatabaseHelper.createBank(bank1);
-        bankDatabaseHelper.createBank(bank2);
+        NumberCondition condition = new NumberCondition(10);
+        condition.save();
 
-        Condition condition = conditionDatabaseHelper.getOrCreateNumberCondition(10);
-
-        bankAccountDatabaseHelper.createBankAccount(new BankAccount("TestA1", "1", "PLN", 20.0, "Test", bank1, condition));
-        bankAccountDatabaseHelper.createBankAccount(new BankAccount("TestA2", "2", "PLN", 20.0, "Test", bank2, condition));
-        bankAccountDatabaseHelper.createBankAccount(new BankAccount("TestA3", "3", "PLN", 20.0, "Test", bank1, condition));
+        (new BankAccount("TestA1", "1", "PLN", 20.0, "Test", bank1, condition)).save();
+        (new BankAccount("TestA2", "2", "PLN", 20.0, "Test", bank2, condition)).save();
+        (new BankAccount("TestA3", "3", "PLN", 20.0, "Test", bank1, condition)).save();
     }
-
-    private void prepareListData() {
-        listDataHeader = new ArrayList<>();
-        listDataChild = new HashMap<>();
-
-        listDataHeader.add("Bank 1");
-        listDataHeader.add("Bank 2");
-        listDataHeader.add("Bank 3");
-
-        List<BankAccount> top250 = new ArrayList<>();
-        top250.add(new BankAccount("Konto 1", "1234 1234 1234 1234", 123));
-        top250.add(new BankAccount("Konto 2", "1234 1234 1234 1234", 56154));
-
-
-        List<BankAccount> nowShowing = new ArrayList<>();
-        nowShowing.add(new BankAccount("Konto 1", "1234 1234 1234 1234", 165));
-        nowShowing.add(new BankAccount("Konto 2", "1234 1234 1234 1234", 45564));
-        nowShowing.add(new BankAccount("Konto 3", "1234 1234 1234 1234", 4354));
-
-        listDataChild.put(listDataHeader.get(0), top250);
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-    }
-
-    private List<String> listDataHeader = new ArrayList<>();
-    private HashMap<String, List<BankAccount>> listDataChild = new HashMap<>();
 }
