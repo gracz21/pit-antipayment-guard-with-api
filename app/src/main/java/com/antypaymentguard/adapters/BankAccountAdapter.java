@@ -2,6 +2,7 @@ package com.antypaymentguard.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,30 @@ import android.widget.TextView;
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.BankAccount;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
 public class BankAccountAdapter extends BaseExpandableListAdapter {
+    private Context context;
+    private List<String> listDataHeader;
+    private HashMap<String, List<BankAccount>> listDataChild;
+
+    private static class ViewHolder {
+        TextView nameTextView;
+        TextView ibanTextView;
+        TextView balanceTextView;
+    }
+
     public BankAccountAdapter(Context context, List<String> listDataHeader, HashMap<String, List<BankAccount>> listChildData) {
-        _context = context;
-        _listDataHeader = listDataHeader;
-        _listDataChild = listChildData;
+        this.context = context;
+        this.listDataHeader = listDataHeader;
+        listDataChild = listChildData;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return _listDataChild.get(_listDataHeader.get(groupPosition)).get(childPosition);
+        return listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -37,33 +49,42 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
 
         final BankAccount bankAccount = (BankAccount) getChild(groupPosition, childPosition);
 
+        ViewHolder viewHolder;
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.item_child, null);
+            viewHolder = new ViewHolder();
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.item_child, parent, false);
+            viewHolder.nameTextView = (TextView) convertView.findViewById(R.id.nameTextView);
+            viewHolder.ibanTextView = (TextView) convertView.findViewById(R.id.noTextView);
+            viewHolder.balanceTextView = (TextView) convertView.findViewById(R.id.balanceTextView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final TextView textViewName = (TextView) convertView.findViewById(R.id.textViewName);
-        final TextView textViewIban = (TextView) convertView.findViewById(R.id.textViewIban);
-        final TextView textViewBalance = (TextView) convertView.findViewById(R.id.textViewBalance);
-        textViewName.setText(bankAccount.getName());
-        textViewIban.setText(bankAccount.getIban());
-        textViewBalance.setText(String.valueOf(bankAccount.getBalance()));
+        viewHolder.nameTextView.setText(bankAccount.getName());
+        viewHolder.ibanTextView.setText(bankAccount.getIban());
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
+        viewHolder.balanceTextView.setText(df.format(bankAccount.getBalance()));
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return _listDataChild.get(_listDataHeader.get(groupPosition)).size();
+        return listDataChild.get(listDataHeader.get(groupPosition)).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return _listDataHeader.get(groupPosition);
+        return listDataHeader.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return _listDataHeader.size();
+        return listDataHeader.size();
     }
 
     @Override
@@ -76,7 +97,7 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.item_group, null);
         }
 
@@ -96,10 +117,6 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
-    private Context _context;
-    private List<String> _listDataHeader;
-    private HashMap<String, List<BankAccount>> _listDataChild;
 }
 
 
