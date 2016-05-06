@@ -1,20 +1,14 @@
 package com.antypaymentguard.models.conditions;
 
+import com.activeandroid.Model;
+
 /**
  * @author Kamil Walkowiak
  */
-public abstract class Condition {
-    protected long id;
-
-    protected Condition(long id) {
-        this.id = id;
+public abstract class Condition extends Model {
+    public Condition() {
+        super();
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public boolean checkCondition(){
-        return false;
-    }
+    public abstract boolean checkCondition();
 }

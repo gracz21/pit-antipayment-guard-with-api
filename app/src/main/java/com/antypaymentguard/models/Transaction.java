@@ -1,20 +1,33 @@
 package com.antypaymentguard.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import java.util.Date;
 
 /**
  * @author Kamil Walkowiak
  */
-public class Transaction {
+@Table(name = "Transactions")
+public class Transaction extends Model {
+    @Column(name = "Date")
     private Date date;
+    @Column(name = "Amount")
     private Double amount;
-    private String place;
+    @Column(name = "Description")
     private String description;
+    @Column(name = "BankAccount", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    private BankAccount bankAccount;
+
+    public Transaction() {
+        super();
+    }
 
     public Transaction(Date date, Double amount, String place, String description) {
+        super();
         this.date = date;
         this.amount = amount;
-        this.place = place;
         this.description = description;
     }
 
@@ -26,9 +39,6 @@ public class Transaction {
         return amount;
     }
 
-    public String getPlace() {
-        return place;
-    }
 
     public String getDescription() {
         return description;
@@ -40,10 +50,6 @@ public class Transaction {
 
     public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
     }
 
     public void setDescription(String description) {
