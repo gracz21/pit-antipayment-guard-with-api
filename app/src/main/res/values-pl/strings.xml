@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Antypayment Guard</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="login">Login</string>
+    <string name="next">Dalej</string>
+    <string name="password">Hasło</string>
+    <string name="sing_in">Zaloguj</string>
+    <string name="title_activity_add_bank_account">Dodaj konto bankowe</string>
+    <string name="title_activity_sign_in_to_bank">Zaloguj się do banku</string>
+</resources>
