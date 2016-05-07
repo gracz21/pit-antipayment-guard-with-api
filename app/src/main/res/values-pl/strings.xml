@@ -13,4 +13,5 @@
     <string name="condition_transactions_number">Liczba transakcji</string>
     <string name="condition_value">Wartość warunku</string>
     <string name="done">Dodaj</string>
+    <string name="balance">Saldo</string>
 </resources>

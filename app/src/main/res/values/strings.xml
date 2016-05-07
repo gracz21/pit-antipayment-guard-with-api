@@ -12,4 +12,6 @@
     <string name="condition_transactions_amount">Transactions amount</string>
     <string name="condition_value">Condition value</string>
     <string name="done">Done</string>
+    <string name="balance">Balance</string>
+    <string name="iban" translatable="false">IBAN</string>
 </resources>

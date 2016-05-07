@@ -24,15 +24,15 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String, List<BankAccount>> listDataChild;
 
+    private static class GroupViewHolder {
+        TextView bankNameTextView;
+        Button removeBankButton;
+    }
+
     private static class ChildViewHolder {
         TextView nameTextView;
         TextView ibanTextView;
         TextView balanceTextView;
-    }
-
-    private static class GroupViewHolder {
-        TextView bankNameTextView;
-        Button removeBankButton;
     }
 
     public BankExpandableListViewAdapter(Context context, List<String> listDataHeader, HashMap<String, List<BankAccount>> listChildData) {
@@ -61,7 +61,7 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             childViewHolder = new ChildViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.item_child, parent, false);
+            convertView = layoutInflater.inflate(R.layout.banks_item_child, parent, false);
             childViewHolder.nameTextView = (TextView) convertView.findViewById(R.id.nameTextView);
             childViewHolder.ibanTextView = (TextView) convertView.findViewById(R.id.noTextView);
             childViewHolder.balanceTextView = (TextView) convertView.findViewById(R.id.balanceTextView);
@@ -71,12 +71,16 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
         }
 
         childViewHolder.nameTextView.setText(bankAccount.getName());
-        childViewHolder.ibanTextView.setText(bankAccount.getIban());
+
+        String iban = context.getString(R.string.iban) + ": " + bankAccount.getIban();
+        childViewHolder.ibanTextView.setText(iban);
 
         DecimalFormat df = new DecimalFormat();
         df.setMinimumFractionDigits(2);
         df.setMaximumFractionDigits(2);
-        childViewHolder.balanceTextView.setText(df.format(bankAccount.getBalance()));
+        String balance = context.getString(R.string.balance) + ": " +
+                df.format(bankAccount.getBalance()) + " " + bankAccount.getCurrencyName();
+        childViewHolder.balanceTextView.setText(balance);
         return convertView;
     }
 
@@ -109,7 +113,7 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             groupViewHolder = new GroupViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.item_group, parent, false);
+            convertView = layoutInflater.inflate(R.layout.banks_item_group, parent, false);
             groupViewHolder.bankNameTextView = (TextView) convertView.findViewById(R.id.bankNameGroupTextView);
             groupViewHolder.removeBankButton = (Button) convertView.findViewById(R.id.removeBankButton);
             convertView.setTag(groupViewHolder);
