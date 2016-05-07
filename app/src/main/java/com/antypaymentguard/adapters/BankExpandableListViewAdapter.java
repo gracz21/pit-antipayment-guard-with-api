@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
-public class BankAccountAdapter extends BaseExpandableListAdapter {
+public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listDataHeader;
     private HashMap<String, List<BankAccount>> listDataChild;
@@ -35,7 +35,7 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
         Button removeBankButton;
     }
 
-    public BankAccountAdapter(Context context, List<String> listDataHeader, HashMap<String, List<BankAccount>> listChildData) {
+    public BankExpandableListViewAdapter(Context context, List<String> listDataHeader, HashMap<String, List<BankAccount>> listChildData) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         listDataChild = listChildData;

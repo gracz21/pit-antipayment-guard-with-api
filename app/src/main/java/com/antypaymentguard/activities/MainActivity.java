@@ -7,16 +7,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
-import com.antypaymentguard.adapters.BankAccountAdapter;
+import com.antypaymentguard.adapters.BankExpandableListViewAdapter;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
-import com.antypaymentguard.models.conditions.Condition;
 import com.antypaymentguard.models.conditions.NumberCondition;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ExpandableListView.OnChildClickListener {
     private List<String> listDataHeader;
     private HashMap<String, List<BankAccount>> listDataChild;
-    private BankAccountAdapter adapter;
+    private BankExpandableListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assert floatingActionButton != null;
         floatingActionButton.setOnClickListener(this);
 
-        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        adapter = new BankAccountAdapter(this, listDataHeader, listDataChild);
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.banksExpandableListView);
+        adapter = new BankExpandableListViewAdapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(adapter);
         expandableListView.setOnChildClickListener(this);
     }
