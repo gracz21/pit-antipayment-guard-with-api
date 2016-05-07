@@ -16,7 +16,7 @@ import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.Bank;
 
-public class SignInToBank extends AppCompatActivity {
+public class SignInToBankActivity extends AppCompatActivity {
     TextInputEditText loginText;
     TextInputEditText passwordText;
     Button signInButton;
@@ -40,7 +40,7 @@ public class SignInToBank extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Signed in successfully", Toast.LENGTH_SHORT).show();
                 (new addBankToDatabaseTask()).execute(selectBankSpinner.getSelectedItem().toString());
-                startActivity(new Intent(SignInToBank.this, AddBankAccount.class));
+                startActivity(new Intent(SignInToBankActivity.this, AddBankAccountActivity.class));
             }
         });
 

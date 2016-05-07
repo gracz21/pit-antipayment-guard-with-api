@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.antypaymentguard.R;
 
-public class AddBankAccount extends AppCompatActivity {
+public class AddBankAccountActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

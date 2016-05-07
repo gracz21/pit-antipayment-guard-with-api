@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(MainActivity.this, SignInToBank.class));
+        startActivity(new Intent(MainActivity.this, SignInToBankActivity.class));
     }
 
     @Override

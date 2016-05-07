@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignInToBank"
+            android:name=".activities.SignInToBankActivity"
             android:label="@string/title_activity_sign_in_to_bank"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -29,13 +29,13 @@
                 android:value="com.antypaymentguard.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.AddBankAccount"
+            android:name=".activities.AddBankAccountActivity"
             android:label="@string/title_activity_add_bank_account"
-            android:parentActivityName=".activities.SignInToBank"
+            android:parentActivityName=".activities.SignInToBankActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.antypaymentguard.activities.SignInToBank" />
+                android:value=".activities.SignInToBankActivity" />
         </activity>
         <meta-data
             android:name="AA_DB_NAME"
