@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(Map<String, List<BankAccount>> hashMap) {
+            listDataHeader.clear();
+            listDataChild.clear();
+            adapter.notifyDataSetChanged();
+
             listDataHeader.addAll(hashMap.keySet());
             listDataChild.putAll(hashMap);
             adapter.notifyDataSetChanged();

@@ -2,7 +2,6 @@ package com.antypaymentguard.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +97,7 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.item_group, null);
+            convertView = layoutInflater.inflate(R.layout.item_group, parent, false);
         }
 
         TextView textViewHeader = (TextView) convertView.findViewById(R.id.textView);
