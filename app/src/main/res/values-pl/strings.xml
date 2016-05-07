@@ -8,4 +8,5 @@
     <string name="sing_in">Zaloguj</string>
     <string name="title_activity_add_bank_account">Dodaj konto bankowe</string>
     <string name="title_activity_sign_in_to_bank">Zaloguj się do banku</string>
+    <string name="remove">Usuń</string>
 </resources>

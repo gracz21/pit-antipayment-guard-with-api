@@ -2,13 +2,17 @@ package com.antypaymentguard.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
+import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
 
 import java.text.DecimalFormat;
@@ -20,10 +24,15 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String, List<BankAccount>> listDataChild;
 
-    private static class ViewHolder {
+    private static class ChildViewHolder {
         TextView nameTextView;
         TextView ibanTextView;
         TextView balanceTextView;
+    }
+
+    private static class GroupViewHolder {
+        TextView bankNameTextView;
+        Button removeBankButton;
     }
 
     public BankAccountAdapter(Context context, List<String> listDataHeader, HashMap<String, List<BankAccount>> listChildData) {
@@ -48,26 +57,26 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
 
         final BankAccount bankAccount = (BankAccount) getChild(groupPosition, childPosition);
 
-        ViewHolder viewHolder;
+        ChildViewHolder childViewHolder;
         if (convertView == null) {
-            viewHolder = new ViewHolder();
+            childViewHolder = new ChildViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.item_child, parent, false);
-            viewHolder.nameTextView = (TextView) convertView.findViewById(R.id.nameTextView);
-            viewHolder.ibanTextView = (TextView) convertView.findViewById(R.id.noTextView);
-            viewHolder.balanceTextView = (TextView) convertView.findViewById(R.id.balanceTextView);
-            convertView.setTag(viewHolder);
+            childViewHolder.nameTextView = (TextView) convertView.findViewById(R.id.nameTextView);
+            childViewHolder.ibanTextView = (TextView) convertView.findViewById(R.id.noTextView);
+            childViewHolder.balanceTextView = (TextView) convertView.findViewById(R.id.balanceTextView);
+            convertView.setTag(childViewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            childViewHolder = (ChildViewHolder) convertView.getTag();
         }
 
-        viewHolder.nameTextView.setText(bankAccount.getName());
-        viewHolder.ibanTextView.setText(bankAccount.getIban());
+        childViewHolder.nameTextView.setText(bankAccount.getName());
+        childViewHolder.ibanTextView.setText(bankAccount.getIban());
 
         DecimalFormat df = new DecimalFormat();
         df.setMinimumFractionDigits(2);
         df.setMaximumFractionDigits(2);
-        viewHolder.balanceTextView.setText(df.format(bankAccount.getBalance()));
+        childViewHolder.balanceTextView.setText(df.format(bankAccount.getBalance()));
         return convertView;
     }
 
@@ -92,17 +101,34 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
+    public View getGroupView(final int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        final String headerTitle = (String) getGroup(groupPosition);
+
+        GroupViewHolder groupViewHolder;
         if (convertView == null) {
+            groupViewHolder = new GroupViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.item_group, parent, false);
+            groupViewHolder.bankNameTextView = (TextView) convertView.findViewById(R.id.bankNameGroupTextView);
+            groupViewHolder.removeBankButton = (Button) convertView.findViewById(R.id.removeBankButton);
+            convertView.setTag(groupViewHolder);
+        } else {
+            groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
 
-        TextView textViewHeader = (TextView) convertView.findViewById(R.id.textView);
-        textViewHeader.setTypeface(null, Typeface.BOLD);
-        textViewHeader.setText(headerTitle);
+        groupViewHolder.bankNameTextView.setTypeface(null, Typeface.BOLD);
+        groupViewHolder.bankNameTextView.setText(headerTitle);
+
+        groupViewHolder.removeBankButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                (new RemoveBankTask()).execute(headerTitle);
+                listDataHeader.remove(groupPosition);
+                listDataChild.remove(headerTitle);
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }
@@ -115,6 +141,15 @@ public class BankAccountAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    private class RemoveBankTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... bankName) {
+            (new Select().from(Bank.class).where("Name = ?", bankName[0]).executeSingle()).delete();
+            return null;
+        }
     }
 }
 
