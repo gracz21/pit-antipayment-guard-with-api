@@ -14,4 +14,5 @@
     <string name="condition_value">Wartość warunku</string>
     <string name="done">Dodaj</string>
     <string name="balance">Saldo</string>
+    <string name="owner">Właściciel</string>
 </resources>

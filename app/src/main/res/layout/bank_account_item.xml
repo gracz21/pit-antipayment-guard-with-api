@@ -16,28 +16,41 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp">
+        android:layout_marginStart="20dp"
+        android:layout_weight="1">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/nameTextView"/>
+            android:id="@+id/bankAccountNameTextView"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/noTextView"/>
+            android:id="@+id/bankAccountIbanTextView"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/balanceTextView"/>
+            android:id="@+id/bankAccountBalanceTextView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/bankAccountOwnerTextView"/>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addedImage"
+        android:src="@drawable/ic_close_24dp" />
 </LinearLayout>

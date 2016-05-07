@@ -15,16 +15,24 @@ import android.widget.Toast;
 import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.Bank;
+import com.antypaymentguard.models.BankAccount;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignInToBankActivity extends AppCompatActivity {
     TextInputEditText loginText;
     TextInputEditText passwordText;
     Button signInButton;
     Spinner selectBankSpinner;
+    boolean isAlreadyLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        isAlreadyLoggedIn = false;
+
         setContentView(R.layout.activity_sign_in_to_bank);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,9 +46,16 @@ public class SignInToBankActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Signed in successfully", Toast.LENGTH_SHORT).show();
-                (new addBankToDatabaseTask()).execute(selectBankSpinner.getSelectedItem().toString());
-                startActivity(new Intent(SignInToBankActivity.this, AddBankAccountActivity.class));
+                String bankName = selectBankSpinner.getSelectedItem().toString();
+
+                if(!isAlreadyLoggedIn) {
+                    Toast.makeText(getApplicationContext(), "Signed in successfully", Toast.LENGTH_SHORT).show();
+                    (new addBankToDatabaseTask()).execute(selectBankSpinner.getSelectedItem().toString());
+                }
+
+                Intent intent = new Intent(SignInToBankActivity.this, AddBankAccountActivity.class);
+                intent.putExtra("bankName", bankName);
+                startActivity(intent);
             }
         });
 
@@ -80,11 +95,12 @@ public class SignInToBankActivity extends AppCompatActivity {
 
             if(bankExist) {
                 signInButton.setText(getString(R.string.next));
-                //Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You are logged into this bank", Toast.LENGTH_SHORT).show();
             } else {
                 signInButton.setText(getString(R.string.sing_in));
-                //Toast.makeText(getApplicationContext(), "Nope", Toast.LENGTH_SHORT).show();
             }
+
+            isAlreadyLoggedIn = bankExist;
         }
     }
 
