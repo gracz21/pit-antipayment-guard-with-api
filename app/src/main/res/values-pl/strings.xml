@@ -9,4 +9,8 @@
     <string name="title_activity_add_bank_account">Dodaj konto bankowe</string>
     <string name="title_activity_sign_in_to_bank">Zaloguj się do banku</string>
     <string name="remove">Usuń</string>
+    <string name="condition_transactions_amount">Kwota transakcji</string>
+    <string name="condition_transactions_number">Liczba transakcji</string>
+    <string name="condition_value">Wartość warunku</string>
+    <string name="done">Dodaj</string>
 </resources>

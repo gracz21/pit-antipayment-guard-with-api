@@ -8,4 +8,8 @@
     <string name="title_activity_sign_in_to_bank">SignIn To Bank</string>
     <string name="next">Next</string>
     <string name="remove">Remove</string>
+    <string name="condition_transactions_number">Transactions number</string>
+    <string name="condition_transactions_amount">Transactions amount</string>
+    <string name="condition_value">Condition value</string>
+    <string name="done">Done</string>
 </resources>
