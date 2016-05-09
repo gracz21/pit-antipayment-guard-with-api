@@ -4,6 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.antypaymentguard.models.conditions.Condition;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class BankAccount extends Model {
     private String iban;
     @Column(name = "CurrencyName")
     private String currencyName;
+    @SerializedName("currencyBalance")
     @Column(name = "Balance")
     private double balance;
     @Column(name = "Owner")

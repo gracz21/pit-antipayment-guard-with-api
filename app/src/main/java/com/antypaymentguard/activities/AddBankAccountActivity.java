@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankAccountListViewAdapter;
+import com.antypaymentguard.api.Loader;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
 
@@ -30,7 +31,7 @@ public class AddBankAccountActivity extends AppCompatActivity {
         String bankName = getIntent().getExtras().getString("bankName");
         //Here goes bankAccounts read from XML ;D
         Bank bank = new Select().from(Bank.class).where("Name = ?", bankName).executeSingle();
-        List<BankAccount> bankAccounts = generateMocks(bank);
+        List<BankAccount> bankAccounts = Loader.getAccounts();
 
         BankAccountListViewAdapter bankAccountListViewAdapter = new BankAccountListViewAdapter(this, bankAccounts);
         ListView bankAccountsListView = (ListView) findViewById(R.id.bankAccountsListView);
@@ -51,14 +52,5 @@ public class AddBankAccountActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
-    }
-
-    private List<BankAccount> generateMocks(Bank bank) {
-        List<BankAccount> result = new ArrayList<>();
-        result.add(new BankAccount("Konto 1", "PL05114020170000400213015148", "PLN", 1200.84, "Jan Kowalski", bank));
-        result.add(new BankAccount("Konto 2", "PL25103019447356101620901000", "PLN", -200.0, "Jan Kowalski", bank));
-        result.add(new BankAccount("Konto 3", "PL03800400022007001839630001", "USD", 0.0, "Jan Kowalski", bank));
-
-        return result;
     }
 }
