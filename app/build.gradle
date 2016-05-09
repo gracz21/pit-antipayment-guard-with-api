@@ -30,4 +30,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    // GSON for unpacking JSON objects
+    compile 'com.google.code.gson:gson:2.4'
 }
