@@ -32,4 +32,6 @@ dependencies {
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     // GSON for unpacking JSON objects
     compile 'com.google.code.gson:gson:2.4'
+    // Dialogs
+    compile 'com.avast:android-styled-dialogs:2.3.3'
 }
