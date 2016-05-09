@@ -6,19 +6,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankAccountListViewAdapter;
 import com.antypaymentguard.api.Loader;
+import com.antypaymentguard.dialogs.ConditionDialog;
+import com.antypaymentguard.dialogs.DialogBuilder;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AddBankAccountActivity extends AppCompatActivity {
+public class AddBankAccountActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    private BankAccountListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +38,10 @@ public class AddBankAccountActivity extends AppCompatActivity {
         Bank bank = new Select().from(Bank.class).where("Name = ?", bankName).executeSingle();
         List<BankAccount> bankAccounts = Loader.getAccounts();
 
-        BankAccountListViewAdapter bankAccountListViewAdapter = new BankAccountListViewAdapter(this, bankAccounts);
+        adapter = new BankAccountListViewAdapter(this, bankAccounts);
         ListView bankAccountsListView = (ListView) findViewById(R.id.bankAccountsListView);
-        bankAccountsListView.setAdapter(bankAccountListViewAdapter);
+        bankAccountsListView.setAdapter(adapter);
+        bankAccountsListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -46,11 +52,17 @@ public class AddBankAccountActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_done) {
+        if (item.getItemId() == R.id.action_done) {
             startActivity(new Intent(AddBankAccountActivity.this, MainActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        // adapter.getItem(position);
+        ConditionDialog.show(this);
     }
 }
