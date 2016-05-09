@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.activeandroid.app.Application">
+        android:name=".GuardApplication">
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
