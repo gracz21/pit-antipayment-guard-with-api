@@ -1,0 +1,38 @@
+{
+  "reply": {
+    "-status": "200 OK",
+    "command": {
+      "-id": "2100704",
+      "-state": "successful",
+      "-name": "ImportAccountsCommand",
+      "progress": { "value": "3" },
+      "result": {
+        "accounts": {
+          "account": [
+            {
+              "name": "Konto 1",
+              "iban": "PL05114020170000400213015148",
+              "currencyBalance": "1200.84",
+              "currencyName": "PLN",
+              "owner": "Jan Kowalski"
+            },
+            {
+              "name": "Konto 2",
+              "iban": "PL25103019447356101620901000",
+              "currencyBalance": "-200",
+              "currencyName": "PLN",
+              "owner": "Jan Kowalski"
+            },
+            {
+              "name": "Konto 3",
+              "iban": "PL03800400022007001839630001",
+              "currencyBalance": "0",
+              "currencyName": "USD",
+              "owner": "Jan Kowalski"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
