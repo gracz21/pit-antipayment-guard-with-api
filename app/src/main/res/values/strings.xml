@@ -15,4 +15,6 @@
     <string name="balance">Balance</string>
     <string name="iban" translatable="false">IBAN</string>
     <string name="owner">Owner</string>
+    <string name="sign_in_succes">Signed in successfully</string>
+    <string name="logged">You are logged into this bank</string>
 </resources>

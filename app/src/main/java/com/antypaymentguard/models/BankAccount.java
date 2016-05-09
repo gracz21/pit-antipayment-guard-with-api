@@ -24,6 +24,11 @@ public class BankAccount extends Model {
     private double balance;
     @Column(name = "Owner")
     private String owner;
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
     @Column(name = "Bank", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private Bank bank;
     @Column(name = "Condition", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)

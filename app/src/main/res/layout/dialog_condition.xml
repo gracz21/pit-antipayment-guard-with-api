@@ -5,11 +5,55 @@
               android:padding="20dp"
               android:orientation="vertical">
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/switch_border"
+        android:checkedButton="@+id/radioButtonAmount"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/radioButtonAmount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/switch_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Kwota transakcji"
+            android:textColor="@drawable/switch_text_color"
+            />
+
+        <RadioButton
+            android:id="@+id/radioButtonNumber"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/switch_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Liczba transakcji"
+            android:textColor="@drawable/switch_text_color"
+            />
+    </RadioGroup >
+
+
     <EditText
         android:id="@+id/editTextCondition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Podaj warunek"/>
+        android:hint="Podaj warunek"
+        android:inputType="numberDecimal"/>
 
 
 </LinearLayout>

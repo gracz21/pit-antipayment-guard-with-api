@@ -15,4 +15,6 @@
     <string name="done">Dodaj</string>
     <string name="balance">Saldo</string>
     <string name="owner">Właściciel</string>
+    <string name="logged">Jesteś już zalogowany do tego banku.</string>
+    <string name="sign_in_succes">Logowanie zakończone sukcesem</string>
 </resources>

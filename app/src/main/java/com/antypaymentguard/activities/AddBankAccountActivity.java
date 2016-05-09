@@ -24,6 +24,7 @@ import java.util.List;
 public class AddBankAccountActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private BankAccountListViewAdapter adapter;
+    private Bank bank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
 
         String bankName = getIntent().getExtras().getString("bankName");
         //Here goes bankAccounts read from XML ;D
-        Bank bank = new Select().from(Bank.class).where("Name = ?", bankName).executeSingle();
+        bank = new Select().from(Bank.class).where("Name = ?", bankName).executeSingle();
         List<BankAccount> bankAccounts = Loader.getAccounts();
 
         adapter = new BankAccountListViewAdapter(this, bankAccounts);
@@ -53,7 +54,9 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_done) {
-            startActivity(new Intent(AddBankAccountActivity.this, MainActivity.class));
+            final Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -62,7 +65,7 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        // adapter.getItem(position);
-        ConditionDialog.show(this);
+        adapter.getItem(position).setBank(bank);
+        ConditionDialog.show(this, adapter.getItem(position));
     }
 }

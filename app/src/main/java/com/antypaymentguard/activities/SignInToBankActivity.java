@@ -49,7 +49,7 @@ public class SignInToBankActivity extends AppCompatActivity {
                 String bankName = selectBankSpinner.getSelectedItem().toString();
 
                 if(!isAlreadyLoggedIn) {
-                    Toast.makeText(getApplicationContext(), "Signed in successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.sign_in_succes, Toast.LENGTH_SHORT).show();
                     (new addBankToDatabaseTask()).execute(selectBankSpinner.getSelectedItem().toString());
                 }
 
@@ -95,7 +95,7 @@ public class SignInToBankActivity extends AppCompatActivity {
 
             if(bankExist) {
                 signInButton.setText(getString(R.string.next));
-                Toast.makeText(getApplicationContext(), "You are logged into this bank", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.logged, Toast.LENGTH_SHORT).show();
             } else {
                 signInButton.setText(getString(R.string.sing_in));
             }
