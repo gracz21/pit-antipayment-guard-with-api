@@ -17,4 +17,7 @@
     <string name="owner">Owner</string>
     <string name="sign_in_succes">Signed in successfully</string>
     <string name="logged">You are logged into this bank</string>
+    <string name="add">Add</string>
+    <string name="condition_can_not_be_empty">Condition can not be empty</string>
+    <string name="back">Back</string>
 </resources>

@@ -16,6 +16,13 @@ import com.antypaymentguard.models.conditions.NumberCondition;
  * Created by Maciej Kozłowski on 09.05.16.
  */
 public class ConditionDialog extends BaseDialog {
+    private BankAccount bankAccount;
+    public static final String TAG = ConditionDialog.class.getSimpleName();
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
     public static void show(FragmentActivity activity, BankAccount bankAccount) {
         if (!DialogBuilder.isDialogShowAvailable(activity)) {
             return;
@@ -27,7 +34,6 @@ public class ConditionDialog extends BaseDialog {
             dialog.show(activity.getSupportFragmentManager(), TAG);
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
-            //Simply ignore
         }
     }
 
@@ -38,11 +44,11 @@ public class ConditionDialog extends BaseDialog {
         final RadioButton radioButtonAmount = (RadioButton) view.findViewById(R.id.radioButtonAmount);
         builder.setView(view);
 
-        builder.setPositiveButton("Dodaj", new View.OnClickListener() {
+        builder.setPositiveButton(getContext().getString(R.string.add), new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if (editText.getText().length() < 1) {
-                    editText.setError("Warunek nie może być pusty");
+                    editText.setError(getContext().getString(R.string.condition_can_not_be_empty));
                     return;
                 }
 
@@ -61,7 +67,7 @@ public class ConditionDialog extends BaseDialog {
             }
         });
 
-        builder.setNegativeButton("Cofnij", new View.OnClickListener() {
+        builder.setNegativeButton(getContext().getString(R.string.back), new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 dismiss();
@@ -71,12 +77,4 @@ public class ConditionDialog extends BaseDialog {
 
         return builder;
     }
-
-    public static final String TAG = ConditionDialog.class.getSimpleName();
-
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    private BankAccount bankAccount;
 }

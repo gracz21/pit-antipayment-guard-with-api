@@ -35,7 +35,6 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String bankName = getIntent().getExtras().getString("bankName");
-        //Here goes bankAccounts read from XML ;D
         bank = new Select().from(Bank.class).where("Name = ?", bankName).executeSingle();
         List<BankAccount> bankAccounts = Loader.getAccounts();
 
