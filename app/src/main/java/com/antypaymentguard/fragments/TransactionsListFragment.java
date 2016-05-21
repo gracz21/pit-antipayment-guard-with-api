@@ -15,6 +15,6 @@ import com.antypaymentguard.R;
 public class TransactionsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bank_account_details, container, false);
+        return inflater.inflate(R.layout.fragment_transactions_list, container, false);
     }
 }

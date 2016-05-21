@@ -6,13 +6,14 @@ import com.activeandroid.annotation.Table;
 import com.antypaymentguard.models.conditions.Condition;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Kamil Walkowiak
  */
 @Table(name = "BankAccounts")
-public class BankAccount extends Model {
+public class BankAccount extends Model implements Serializable {
     @Column(name = "Name")
     private String name;
     @Column(name = "Iban")
