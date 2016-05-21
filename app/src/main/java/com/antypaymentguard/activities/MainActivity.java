@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(MainActivity.this, BankAccountActivity.class);
         intent.putExtra("bankAccount", selectedBankAccount);
         startActivity(intent);
-        //Snackbar.make(view, "Great! You selected bank account ;D", Snackbar.LENGTH_SHORT).show();
         return false;
     }
 
