@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.BankAccount;
 
-import java.text.DecimalFormat;
-
 /**
  * @author Kamil Walkowiak
  */
@@ -35,10 +33,7 @@ public class BankAccountDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        DecimalFormat df = new DecimalFormat();
-        df.setMinimumFractionDigits(2);
-        df.setMaximumFractionDigits(2);
-        String balance = df.format(bankAccount.getBalance()) + " " + bankAccount.getCurrencyName();
+        String balance = bankAccount.getBalanceWithCurrencyName();
 
         View view = inflater.inflate(R.layout.fragment_bank_account_details, container, false);
         ((TextView) view.findViewById(R.id.nameTextView)).setText(bankAccount.getName());

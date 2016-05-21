@@ -7,6 +7,7 @@ import com.antypaymentguard.models.conditions.Condition;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -85,6 +86,13 @@ public class BankAccount extends Model implements Serializable {
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public String getBalanceWithCurrencyName() {
+        DecimalFormat df = new DecimalFormat();
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
+        return df.format(balance) + " " + currencyName;
     }
 
     public List<Transaction> getTransactions() {

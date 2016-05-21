@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.BankAccount;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -54,11 +53,7 @@ public class BankAccountListViewAdapter extends ArrayAdapter<BankAccount> {
         String iban = context.getString(R.string.iban) + ": " + bankAccount.getIban();
         viewHolder.bankAccountIbanTextView.setText(iban);
 
-        DecimalFormat df = new DecimalFormat();
-        df.setMinimumFractionDigits(2);
-        df.setMaximumFractionDigits(2);
-        String balance = context.getString(R.string.balance) + ": " +
-                df.format(bankAccount.getBalance()) + " " + bankAccount.getCurrencyName();
+        String balance = context.getString(R.string.balance) + ": " + bankAccount.getBalanceWithCurrencyName();
         viewHolder.bankAccountBalanceTextView.setText(balance);
 
         String owner = context.getString(R.string.owner) + ": " + bankAccount.getOwner();
