@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-        Snackbar.make(view, "Great! You selected bank account ;D", Snackbar.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, BankAccountActivity.class));
+        //Snackbar.make(view, "Great! You selected bank account ;D", Snackbar.LENGTH_SHORT).show();
         return false;
     }
 

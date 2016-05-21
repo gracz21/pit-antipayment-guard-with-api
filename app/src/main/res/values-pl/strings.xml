@@ -20,7 +20,7 @@
     <string name="add">Dodaj</string>
     <string name="condition_can_not_be_empty">Warunek nie może być pusty</string>
     <string name="back">Wróć</string>
-    <string name="title_activity_pay_card_details">Szczegóły konta bankowego</string>
+    <string name="title_activity_bank_account_details">Szczegóły konta bankowego</string>
     <string name="title_fragment_pay_card_details">Informacje</string>
     <string name="title_fragment_transactions_list">Transakcje</string>
 </resources>

@@ -37,6 +37,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SignInToBankActivity" />
         </activity>
+        <activity
+            android:name=".activities.BankAccountActivity"
+            android:label="@string/title_activity_bank_account_details"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
         <meta-data
             android:name="AA_DB_NAME"
             android:value="AG.db" />
