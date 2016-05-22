@@ -1,21 +1,21 @@
 package com.antypaymentguard.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.antypaymentguard.adapters.BankAccountSectionAdapter;
 
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.models.Transaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BankAccountActivity extends AppCompatActivity {
     private BankAccountSectionAdapter mSectionsPagerAdapter;
@@ -31,7 +31,8 @@ public class BankAccountActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         BankAccount bankAccount = (BankAccount) getIntent().getSerializableExtra("bankAccount");
-        mSectionsPagerAdapter = new BankAccountSectionAdapter(getSupportFragmentManager(), this, bankAccount);
+        ArrayList<Transaction> transactions = (ArrayList<Transaction>) getIntent().getSerializableExtra("transactions");
+        mSectionsPagerAdapter = new BankAccountSectionAdapter(getSupportFragmentManager(), this, bankAccount, transactions);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);

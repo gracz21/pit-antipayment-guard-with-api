@@ -4,6 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author Kamil Walkowiak
  */
 @Table(name = "Transactions")
-public class Transaction extends Model {
+public class Transaction extends Model implements Serializable {
     @Column(name = "Title")
     private String title;
     @Column(name = "Date")

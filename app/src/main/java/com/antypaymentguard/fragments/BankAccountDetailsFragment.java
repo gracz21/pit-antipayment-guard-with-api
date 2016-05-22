@@ -14,7 +14,7 @@ import com.antypaymentguard.models.BankAccount;
  * @author Kamil Walkowiak
  */
 public class BankAccountDetailsFragment extends Fragment {
-    private static String bankAccountArgKey = "bankAccount";
+    private static final String bankAccountArgKey = "bankAccount";
     private BankAccount bankAccount;
 
     public static BankAccountDetailsFragment newInstance(BankAccount bankAccount) {

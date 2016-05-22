@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -15,8 +16,11 @@ import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankExpandableListViewAdapter;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.models.Transaction;
 import com.antypaymentguard.models.conditions.NumberCondition;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ExpandableListView.OnChildClickListener {
     private List<String> listDataHeader;
     private HashMap<String, List<BankAccount>> listDataChild;
+    private HashMap<BankAccount, ArrayList<Transaction>> transactionsMap;
     private BankExpandableListViewAdapter adapter;
 
     @Override
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
+        transactionsMap = new HashMap<>();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BankAccount selectedBankAccount = (BankAccount) adapter.getChild(groupPosition, childPosition);
         Intent intent = new Intent(MainActivity.this, BankAccountActivity.class);
         intent.putExtra("bankAccount", selectedBankAccount);
+        intent.putExtra("transactions", transactionsMap.get(selectedBankAccount));
         startActivity(intent);
         return false;
     }
@@ -75,7 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Map<String, List<BankAccount>> result = new HashMap<>();
             List<Bank> banks = new Select().from(Bank.class).execute();
             for(Bank bank: banks) {
-                result.put(bank.getName(), bank.getBankAccounts());
+                List<BankAccount> bankAccounts = bank.getBankAccounts();
+                result.put(bank.getName(), bankAccounts);
+                for(BankAccount bankAccount: bankAccounts) {
+                    transactionsMap.put(bankAccount, bankAccount.getTransactions());
+                }
+                Log.d("DONE", "DONE");
             }
             return result;
         }
@@ -102,8 +114,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NumberCondition condition = new NumberCondition(10);
         condition.save();
 
-        (new BankAccount("TestA1", "1", "PLN", 20.0, "Test", bank1, condition)).save();
+        BankAccount bankAccount = new BankAccount("TestA1", "1", "PLN", 20.0, "Test", bank1, condition);
+        bankAccount.save();
         (new BankAccount("TestA2", "2", "PLN", 20.0, "Test", bank2, condition)).save();
         (new BankAccount("TestA3", "3", "PLN", 20.0, "Test", bank1, condition)).save();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            (new Transaction("Usługi medyczne za okres 01/04/2016 do 31/04/2016",
+                    format.parse("22-05-2016"), -127.32, "Medicover Sp. z o.o. Al. Jerozolimskie 96 00-807 Warszawa, Polska NIP: 525-15-77-627",
+                    null, "PRZELEW ZEWNĘTRZNY", bankAccount)).save();
+            (new Transaction("Składka ZUS, deklaracja nr.: 203721",
+                    format.parse("05-05-2016"), -696.00, "Zakład Ubezpieczeń Społecznych",
+                    "PL83101010230000261395100000", "PRZELEW ZUS", bankAccount)).save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

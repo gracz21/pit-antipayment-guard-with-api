@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Kamil Walkowiak
@@ -95,8 +95,10 @@ public class BankAccount extends Model implements Serializable {
         return df.format(balance) + " " + currencyName;
     }
 
-    public List<Transaction> getTransactions() {
-        return getMany(Transaction.class, "BankAccount");
+    public ArrayList<Transaction> getTransactions() {
+        ArrayList<Transaction> result = new ArrayList<>();
+        result.addAll(getMany(Transaction.class, "BankAccount"));
+        return result;
     }
 
     public void setName(String name) {

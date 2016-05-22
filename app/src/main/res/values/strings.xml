@@ -24,4 +24,6 @@
     <string name="title_fragment_pay_card_details">Details</string>
     <string name="title_fragment_transactions_list">Transactions</string>
     <string name="bank" translatable="false">Bank</string>
+    <string name="amount">Amount</string>
+    <string name="transactionDate">Transaction date</string>
 </resources>

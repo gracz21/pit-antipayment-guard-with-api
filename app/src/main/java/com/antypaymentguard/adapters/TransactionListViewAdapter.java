@@ -58,11 +58,12 @@ public class TransactionListViewAdapter extends ArrayAdapter<Transaction> {
 
         viewHolder.transactionTitleTextView.setText(transaction.getTitle());
 
-        String amount = context.getString(R.string.balance) + ": " + transaction.getAmountWithCurrencyName();
+        String amount = context.getString(R.string.amount) + ": " + transaction.getAmountWithCurrencyName();
         viewHolder.transactionAmountTextView.setText(amount);
 
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context.getApplicationContext());
-        viewHolder.transactionDateTextView.setText(dateFormat.format(transaction.getDate()));
+        String date = context.getString(R.string.transactionDate) + ": " + dateFormat.format(transaction.getDate());
+        viewHolder.transactionDateTextView.setText(date);
         return convertView;
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Antypayment Guard</string>
     <string name="action_settings">Ustawienia</string>
     <string name="login">Login</string>
     <string name="next">Dalej</string>
@@ -23,4 +22,6 @@
     <string name="title_activity_bank_account_details">Szczegóły konta bankowego</string>
     <string name="title_fragment_pay_card_details">Informacje</string>
     <string name="title_fragment_transactions_list">Transakcje</string>
+    <string name="amount">Kwota</string>
+    <string name="date">Data transakcji</string>
 </resources>
