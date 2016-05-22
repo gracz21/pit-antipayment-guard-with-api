@@ -25,8 +25,9 @@
         android:layout_toRightOf="@+id/bankAccountIcon"
         android:layout_marginBottom="6dip"
 
-        android:textSize="34sp"
-        android:singleLine="true" />
+        android:textSize="48sp"
+        android:singleLine="true"
+        android:text="New Text" />
 
     <TextView
         android:id="@+id/balanceLabelTextView"
