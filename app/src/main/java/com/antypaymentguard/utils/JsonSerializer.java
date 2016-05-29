@@ -28,7 +28,7 @@ public class JsonSerializer<T> {
     }
 
     public T deserialize(Reader data, Class<T> clazz) {
-        final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC).create();
+        final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC).create();
         return gson.fromJson(data, clazz);
     }
 

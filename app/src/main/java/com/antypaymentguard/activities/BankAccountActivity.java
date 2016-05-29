@@ -8,13 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.antypaymentguard.adapters.BankAccountSectionAdapter;
-
 import com.antypaymentguard.R;
+import com.antypaymentguard.adapters.BankAccountSectionAdapter;
+import com.antypaymentguard.api.Loader;
 import com.antypaymentguard.models.BankAccount;
 import com.antypaymentguard.models.BankAccountTransaction;
+import com.antypaymentguard.shared.TimeSharedPreferences;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class BankAccountActivity extends AppCompatActivity {
     private BankAccountSectionAdapter mSectionsPagerAdapter;
@@ -37,6 +38,16 @@ public class BankAccountActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        if (TimeSharedPreferences.getLastTime(String.valueOf(bankAccount.getId())) == 0) {
+            final List<BankAccountTransaction> transactions = Loader.getTransactions();
+            for (BankAccountTransaction transaction : transactions) {
+                transaction.setBankAccount(bankAccount);
+                transaction.save();
+            }
+
+            TimeSharedPreferences.change().setKey(String.valueOf(bankAccount.getId())).commit();
+        }
     }
 
 

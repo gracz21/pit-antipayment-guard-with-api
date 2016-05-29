@@ -1,5 +1,6 @@
 package com.antypaymentguard.models;
 
+import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
@@ -11,7 +12,9 @@ import java.util.Date;
  */
 public class BankAccountTransaction extends SugarRecord implements Serializable {
     private String title;
+    @SerializedName("transactionOn")
     private Date date;
+    @SerializedName("currencyAmount")
     private Double amount;
     private String party;
     private String partyIban;
