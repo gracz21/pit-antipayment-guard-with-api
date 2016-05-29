@@ -67,7 +67,7 @@ public class Notifier {
         notificationManager.notify(id, builder.build());
     }
 
-    public static boolean showDelayedNotification(Context context, long timeInMilliseconds, Intent intentToSend) {
+    private static boolean showDelayedNotification(Context context, long timeInMilliseconds, Intent intentToSend) {
         if (System.currentTimeMillis() > timeInMilliseconds) {
             Log.i("###hash", "Notification is too old: " + timeInMilliseconds + " current time: " + System.currentTimeMillis());
             return false;

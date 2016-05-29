@@ -13,6 +13,7 @@ import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankExpandableListViewAdapter;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.notification.Notifier;
 import com.orm.query.Select;
 
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new BankExpandableListViewAdapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(adapter);
         expandableListView.setOnChildClickListener(this);
+
+        Notifier.showNotification(this, 1000 * 60);
     }
 
     @Override
