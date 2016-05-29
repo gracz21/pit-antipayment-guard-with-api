@@ -3,16 +3,19 @@ package com.antypaymentguard.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.models.conditions.AmountCondition;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -31,9 +34,11 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
     }
 
     private static class ChildViewHolder {
+        ImageView bankAccountIconImageView;
         TextView nameTextView;
         TextView ibanTextView;
         TextView balanceTextView;
+        TextView remainingTextView;
     }
 
     public BankExpandableListViewAdapter(Context context, List<String> listDataHeader, HashMap<String, List<BankAccount>> listChildData) {
@@ -63,13 +68,33 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
             childViewHolder = new ChildViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.banks_item_child, parent, false);
+            childViewHolder.bankAccountIconImageView = (ImageView) convertView.findViewById(R.id.bankAccountIconImageView);
             childViewHolder.nameTextView = (TextView) convertView.findViewById(R.id.nameTextView);
             childViewHolder.ibanTextView = (TextView) convertView.findViewById(R.id.noTextView);
             childViewHolder.balanceTextView = (TextView) convertView.findViewById(R.id.balanceTextView);
+            childViewHolder.remainingTextView = (TextView) convertView.findViewById(R.id.remainedTextView);
             convertView.setTag(childViewHolder);
         } else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
+
+        String status;
+        if(bankAccount.isConditionFulfilled()) {
+            childViewHolder.bankAccountIconImageView.setImageResource(R.drawable.ic_bank_account_fulfilled_48dp);
+            childViewHolder.remainingTextView.setTextColor(ContextCompat.getColor(context, R.color.green));
+            status = context.getString(R.string.condition_fulfilled);
+        } else {
+            childViewHolder.bankAccountIconImageView.setImageResource(R.drawable.ic_bank_account_not_fulfilled_48dp);
+            childViewHolder.remainingTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
+            status = context.getString(R.string.remained) + ": " + bankAccount.getConditionStatus()
+                    + "/" + bankAccount.getCondition().toString();
+            if(bankAccount.getCondition().getClass() == AmountCondition.class) {
+                status += " " + bankAccount.getCurrencyName();
+            } else {
+                status += " " + context.getString(R.string.transactions);
+            }
+        }
+        childViewHolder.remainingTextView.setText(status);
 
         childViewHolder.nameTextView.setText(bankAccount.getName());
 

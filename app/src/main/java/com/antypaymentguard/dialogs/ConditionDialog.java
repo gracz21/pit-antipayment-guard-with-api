@@ -56,10 +56,12 @@ public class ConditionDialog extends BaseDialog {
                 if (radioButtonAmount.isChecked()) {
                     final double value = Double.parseDouble(editText.getText().toString());
                     AmountCondition condition = new AmountCondition(value);
+                    condition.save();
                     bankAccount.setAmountCondition(condition);
                 } else {
                     final int value = Integer.parseInt(editText.getText().toString());
                     NumberCondition condition = new NumberCondition(value);
+                    condition.save();
                     bankAccount.setNumberCondition(condition);
                 }
                 SugarRecord.save(bankAccount);

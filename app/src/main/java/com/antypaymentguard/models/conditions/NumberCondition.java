@@ -23,4 +23,9 @@ public class NumberCondition extends Condition {
     public boolean checkCondition() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(numberOfTransactions);
+    }
 }

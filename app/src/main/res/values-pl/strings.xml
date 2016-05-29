@@ -26,4 +26,7 @@
     <string name="transaction_date">Data transakcji</string>
     <string name="condition_status">Stan warunku</string>
     <string name="condition_type">Rodzaj warunku</string>
+    <string name="condition_fulfilled">Warunek spełniony</string>
+    <string name="remained">Pozostało</string>
+    <string name="transactions">Transackji</string>
 </resources>

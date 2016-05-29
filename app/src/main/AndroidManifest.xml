@@ -48,7 +48,7 @@
         </activity>
         <meta-data
             android:name="DATABASE"
-            android:value="apg1.db" />
+            android:value="apg2.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />

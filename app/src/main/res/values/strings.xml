@@ -28,4 +28,7 @@
     <string name="transaction_date">Transaction date</string>
     <string name="condition_status">Condition status</string>
     <string name="condition_type">Condition type</string>
+    <string name="condition_fulfilled">Condition fulfilled</string>
+    <string name="remained">Remained</string>
+    <string name="transactions">Transactions</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.antypaymentguard.models.conditions;
 
+import java.text.DecimalFormat;
+
 /**
  * @author Kamil Walkowiak
  */
@@ -18,5 +20,13 @@ public class AmountCondition extends Condition {
     @Override
     public boolean checkCondition() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat();
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
+        return df.format(amountOfTransactions);
     }
 }
