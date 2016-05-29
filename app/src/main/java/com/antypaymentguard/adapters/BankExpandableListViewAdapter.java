@@ -177,7 +177,8 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
 
         @Override
         protected Void doInBackground(String... bankName) {
-            (Select.from(Bank.class).where(Condition.prop("name").eq(bankName)).first()).delete();
+            Bank bank = Select.from(Bank.class).where(Condition.prop("name").eq(bankName[0])).first();
+            bank.delete();
             return null;
         }
     }
