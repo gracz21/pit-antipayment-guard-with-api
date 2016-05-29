@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for(BankAccount bankAccount: bankAccounts) {
                     transactionsMap.put(bankAccount, bankAccount.getTransactions());
                 }
-                Log.d("DONE", "DONE");
             }
             return result;
         }

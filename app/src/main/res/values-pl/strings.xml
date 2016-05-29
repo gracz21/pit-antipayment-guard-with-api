@@ -23,5 +23,7 @@
     <string name="title_fragment_pay_card_details">Informacje</string>
     <string name="title_fragment_transactions_list">Transakcje</string>
     <string name="amount">Kwota</string>
-    <string name="date">Data transakcji</string>
+    <string name="transaction_date">Data transakcji</string>
+    <string name="condition_status">Stan warunku</string>
+    <string name="condition_type">Rodzaj warunku</string>
 </resources>
