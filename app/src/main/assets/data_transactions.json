@@ -1,0 +1,89 @@
+{
+  "reply": {
+    "-status": "200 OK",
+    "command": {
+      "-id": "2100708",
+      "-state": "successful",
+      "-name": "ImportAccountTransactionsCommand",
+      "progress": { "value": "6" },
+      "result": {
+        "moneyTransactions": {
+          "moneyTransaction": [
+            {
+              "id": "2100709",
+              "transactionOn": "2014-04-17",
+              "bookedOn": "2014-04-17",
+              "currencyAmount": "-127.32",
+              "currencyBalance": "171.68",
+              "title": "Usługi medyczne za okres 01/03/2015 do 31/03/2015",
+              "party": "Medicover Sp. z o.o. Al. Jerozolimskie 96 00-807 Warszawa, Polska NIP: 525-15-77-627",
+              "partyIban": "null",
+              "kind": "PRZELEW ZEWNĘTRZNY",
+              "uid": "null"
+            },
+            {
+              "id": "2100710",
+              "transactionOn": "2014-04-07",
+              "bookedOn": "2014-04-08",
+              "currencyAmount": "-696.00",
+              "currencyBalance": "299.00",
+              "title": "Składka ZUS, deklaracja nr.: 203721",
+              "party": "Zakład Ubezpieczeń Społecznych",
+              "partyIban": "PL83101010230000261395100000",
+              "kind": "PRZELEW ZUS",
+              "uid": "null"
+            },
+            {
+              "id": "2100711",
+              "transactionOn": "2014-04-05",
+              "bookedOn": "2014-04-05",
+              "currencyAmount": "-5.00",
+              "currencyBalance": "995.00",
+              "title": "Opłata za kartę",
+              "party": "null",
+              "partyIban": "null",
+              "kind": "OPŁATA",
+              "uid": "null"
+            },
+            {
+              "id": "2100712",
+              "transactionOn": "2014-03-28",
+              "bookedOn": "2014-04-01",
+              "currencyAmount": "-100.99",
+              "currencyBalance": "1000.00",
+              "title": "Transakcja kartą debetową;obciążenie 4814 POL Poznan Doladowania.payu",
+              "party": "Doladowania.payu, POL Poznan Doladowania.payu",
+              "partyIban": "PL63249010440000420034376084",
+              "kind": "ZAPŁATA KARTĄ",
+              "uid": "null"
+            },
+            {
+              "id": "2100713",
+              "transactionOn": "2014-01-01",
+              "bookedOn": "2014-01-01",
+              "currencyAmount": "-20.00",
+              "currencyBalance": "1100.99",
+              "title": "Zwrot za Sylwestra",
+              "party": "Jan Kowalski Dunikowskiego 23B, 01-200 Warszawa",
+              "partyIban": "PL83130000002076700146310001",
+              "kind": "PRZELEW ZEWNĘTRZNY",
+              "uid": "null"
+            },
+            {
+              "id": "2100714",
+              "transactionOn": "2013-12-03",
+              "bookedOn": "2013-12-03",
+              "currencyAmount": "3000.00",
+              "currencyBalance": "1120.99",
+              "title": "Wynagrodzenie za listopad 2013",
+              "party": "Firma Sp. z o.o.",
+              "partyIban": "PL63249010440000420034376084",
+              "kind": "PRZELEW ZEWNĘTRZNY",
+              "uid": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
