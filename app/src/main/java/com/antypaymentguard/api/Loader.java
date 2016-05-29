@@ -4,7 +4,9 @@ import android.support.annotation.Nullable;
 
 import com.antypaymentguard.GuardApplication;
 import com.antypaymentguard.api.models.BankAccountResponse;
+import com.antypaymentguard.api.models.TransactionResponse;
 import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.models.BankAccountTransaction;
 import com.antypaymentguard.utils.JsonSerializer;
 
 import java.io.BufferedReader;
@@ -27,6 +29,33 @@ public class Loader {
                     new JsonSerializer<BankAccountResponse>().deserialize(reader, BankAccountResponse.class);
 
             return bankAccountResponse.getAccounts();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // and simply ignore, just university project
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // again
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static List<BankAccountTransaction> getTransactions() {
+        BufferedReader reader = null;
+
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(GuardApplication.getInstance().getAssets().open("data_transactions.json")));
+            final TransactionResponse transactionResponse =
+                    new JsonSerializer<TransactionResponse>().deserialize(reader, TransactionResponse.class);
+
+            return transactionResponse.getTransactions();
         } catch (IOException e) {
             e.printStackTrace();
             // and simply ignore, just university project
