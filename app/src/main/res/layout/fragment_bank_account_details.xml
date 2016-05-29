@@ -211,7 +211,7 @@
             android:layout_marginLeft="32dp"
 
             android:textColor="@color/colorText"
-            android:textSize="@dimen/material_text_title"
+            android:textSize="@dimen/material_text_subhead"
             android:text="New Text"/>
 
         <TextView
