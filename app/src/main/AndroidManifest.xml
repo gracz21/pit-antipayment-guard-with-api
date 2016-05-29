@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.antypaymentguard">
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -58,6 +60,8 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.antypaymentguard.models" />
+        <receiver android:name=".notification.NotificationAlarmReceiver" />
+
     </application>
 
 </manifest>
