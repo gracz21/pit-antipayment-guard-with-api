@@ -11,6 +11,7 @@ import com.antypaymentguard.models.BankAccount;
 import com.antypaymentguard.models.conditions.AmountCondition;
 import com.antypaymentguard.models.conditions.Condition;
 import com.antypaymentguard.models.conditions.NumberCondition;
+import com.orm.SugarRecord;
 
 /**
  * Created by Maciej Kozłowski on 09.05.16.
@@ -52,17 +53,16 @@ public class ConditionDialog extends BaseDialog {
                     return;
                 }
 
-                final Condition condition;
                 if (radioButtonAmount.isChecked()) {
                     final double value = Double.parseDouble(editText.getText().toString());
-                    condition = new AmountCondition(value);
+                    AmountCondition condition = new AmountCondition(value);
+                    bankAccount.setAmountCondition(condition);
                 } else {
                     final int value = Integer.parseInt(editText.getText().toString());
-                    condition = new NumberCondition(value);
+                    NumberCondition condition = new NumberCondition(value);
+                    bankAccount.setNumberCondition(condition);
                 }
-
-                bankAccount.setCondition(condition);
-                bankAccount.save();
+                SugarRecord.save(bankAccount);
                 dismiss();
             }
         });

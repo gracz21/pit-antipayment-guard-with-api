@@ -1,13 +1,13 @@
 package com.antypaymentguard.models.conditions;
 
-import com.activeandroid.Model;
+import com.orm.SugarRecord;
 
 import java.io.Serializable;
 
 /**
  * @author Kamil Walkowiak
  */
-public abstract class Condition extends Model implements Serializable {
+public abstract class Condition extends SugarRecord implements Serializable {
     public Condition() {
         super();
     }

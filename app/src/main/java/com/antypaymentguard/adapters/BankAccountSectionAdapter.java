@@ -9,7 +9,7 @@ import com.antypaymentguard.R;
 import com.antypaymentguard.fragments.BankAccountDetailsFragment;
 import com.antypaymentguard.fragments.TransactionsListFragment;
 import com.antypaymentguard.models.BankAccount;
-import com.antypaymentguard.models.Transaction;
+import com.antypaymentguard.models.BankAccountTransaction;
 
 import java.util.ArrayList;
 
@@ -20,13 +20,11 @@ public class BankAccountSectionAdapter extends FragmentPagerAdapter {
     final int pageCount = 2;
     private Context context;
     private BankAccount bankAccount;
-    private ArrayList<Transaction> transactions;
 
-    public BankAccountSectionAdapter(FragmentManager fm, Context context, BankAccount bankAccount, ArrayList<Transaction> transactions) {
+    public BankAccountSectionAdapter(FragmentManager fm, Context context, BankAccount bankAccount) {
         super(fm);
         this.context = context;
         this.bankAccount = bankAccount;
-        this.transactions = transactions;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class BankAccountSectionAdapter extends FragmentPagerAdapter {
             case 0:
                 return BankAccountDetailsFragment.newInstance(bankAccount);
             case 1:
-                return TransactionsListFragment.newInstance(transactions);
+                return TransactionsListFragment.newInstance(new ArrayList<>(bankAccount.getTransactions()));
         }
         return null;
     }

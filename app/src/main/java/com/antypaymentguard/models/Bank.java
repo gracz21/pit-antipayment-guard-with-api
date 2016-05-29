@@ -1,8 +1,8 @@
 package com.antypaymentguard.models;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
+import com.orm.SugarRecord;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,13 +10,9 @@ import java.util.List;
 /**
  * @author Kamil Walkowiak
  */
-@Table(name = "Banks")
-public class Bank extends Model implements Serializable {
-    @Column(name = "Name")
+public class Bank extends SugarRecord implements Serializable {
     private String name;
-    @Column(name = "SessionId")
     private String sessionId;
-    @Column(name = "SessionIdSignature")
     private String sessionIdSignature;
 
     public Bank() {
@@ -43,7 +39,7 @@ public class Bank extends Model implements Serializable {
     }
 
     public List<BankAccount> getBankAccounts() {
-        return getMany(BankAccount.class, "Bank");
+        return Select.from(BankAccount.class).where(Condition.prop("bank").eq(getId())).list();
     }
 
     public void setName(String name) {

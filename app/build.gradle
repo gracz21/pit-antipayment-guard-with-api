@@ -29,7 +29,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    compile 'com.github.satyan:sugar:1.4'
     // GSON for unpacking JSON objects
     compile 'com.google.code.gson:gson:2.6.2'
     // Dialogs

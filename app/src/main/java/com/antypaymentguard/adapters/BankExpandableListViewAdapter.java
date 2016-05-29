@@ -10,10 +10,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -151,7 +152,7 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
 
         @Override
         protected Void doInBackground(String... bankName) {
-            (new Select().from(Bank.class).where("Name = ?", bankName[0]).executeSingle()).delete();
+            (Select.from(Bank.class).where(Condition.prop("name").eq(bankName)).first()).delete();
             return null;
         }
     }

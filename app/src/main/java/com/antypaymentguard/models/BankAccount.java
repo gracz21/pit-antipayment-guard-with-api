@@ -1,46 +1,53 @@
 package com.antypaymentguard.models;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
+
+import com.antypaymentguard.models.conditions.AmountCondition;
 import com.antypaymentguard.models.conditions.Condition;
+import com.antypaymentguard.models.conditions.NumberCondition;
 import com.google.gson.annotations.SerializedName;
+import com.orm.dsl.Ignore;
+import com.orm.dsl.Table;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Kamil Walkowiak
  */
-@Table(name = "BankAccounts")
-public class BankAccount extends Model implements Serializable {
-    @Column(name = "Name")
+@Table
+public class BankAccount implements Serializable {
+    private Long id;
     private String name;
-    @Column(name = "Iban")
     private String iban;
-    @Column(name = "CurrencyName")
     private String currencyName;
     @SerializedName("currencyBalance")
-    @Column(name = "Balance")
     private double balance;
-    @Column(name = "Owner")
     private String owner;
+
+    private Bank bank;
+    private AmountCondition amountCondition;
+    private NumberCondition numberCondition;
+
+    @Ignore
+    private boolean isConditionFulfilled;
+    @Ignore
+    private int transactionsNumber;
+    @Ignore
+    private double transactionsAmount;
+    @Ignore
+    private ArrayList<BankAccountTransaction> transactions;
 
     public void setBank(Bank bank) {
         this.bank = bank;
     }
 
-    @Column(name = "Bank", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
-    private Bank bank;
-    @Column(name = "Condition", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
-    private Condition condition;
-
     public BankAccount() {
         super();
     }
 
-    public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank, Condition condition) {
+    public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank, AmountCondition condition) {
         super();
         this.name = name;
         this.iban = iban;
@@ -48,7 +55,26 @@ public class BankAccount extends Model implements Serializable {
         this.balance = balance;
         this.owner = owner;
         this.bank = bank;
-        this.condition = condition;
+        this.amountCondition = condition;
+        this.numberCondition = null;
+        this.isConditionFulfilled = false;
+        this.transactionsNumber = 0;
+        this.transactionsAmount = 0.0;
+    }
+
+    public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank, NumberCondition condition) {
+        super();
+        this.name = name;
+        this.iban = iban;
+        this.currencyName = currencyName;
+        this.balance = balance;
+        this.owner = owner;
+        this.bank = bank;
+        this.numberCondition = condition;
+        this.amountCondition = null;
+        this.isConditionFulfilled = false;
+        this.transactionsNumber = 0;
+        this.transactionsAmount = 0.0;
     }
 
     public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank) {
@@ -58,6 +84,10 @@ public class BankAccount extends Model implements Serializable {
         this.balance = balance;
         this.owner = owner;
         this.bank = bank;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -84,8 +114,39 @@ public class BankAccount extends Model implements Serializable {
         return bank;
     }
 
+    public boolean isConditionFulfilled() {
+        return isConditionFulfilled;
+    }
+
+    public int getTransactionsNumber() {
+        return transactionsNumber;
+    }
+
+    public double getTransactionsAmount() {
+        return transactionsAmount;
+    }
+
     public Condition getCondition() {
-        return condition;
+        if(amountCondition != null) {
+            return amountCondition;
+        } else {
+            return numberCondition;
+        }
+    }
+
+    public String getConditionStatus() {
+        if(amountCondition != null) {
+            DecimalFormat df = new DecimalFormat();
+            df.setMinimumFractionDigits(2);
+            df.setMaximumFractionDigits(2);
+            return df.format(transactionsAmount);
+        } else {
+            return Integer.toString(transactionsNumber);
+        }
+    }
+
+    public List<BankAccountTransaction> getTransactions() {
+        return BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ?", getId().toString());
     }
 
     public String getBalanceWithCurrencyName() {
@@ -93,12 +154,6 @@ public class BankAccount extends Model implements Serializable {
         df.setMinimumFractionDigits(2);
         df.setMaximumFractionDigits(2);
         return df.format(balance) + " " + currencyName;
-    }
-
-    public ArrayList<Transaction> getTransactions() {
-        ArrayList<Transaction> result = new ArrayList<>();
-        result.addAll(getMany(Transaction.class, "BankAccount"));
-        return result;
     }
 
     public void setName(String name) {
@@ -121,7 +176,37 @@ public class BankAccount extends Model implements Serializable {
         this.owner = owner;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void setAmountCondition(AmountCondition amountCondition) {
+        this.amountCondition = amountCondition;
+        this.numberCondition = null;
+    }
+
+    public void setNumberCondition(NumberCondition numberCondition) {
+        this.numberCondition = numberCondition;
+        this.amountCondition = null;
+    }
+
+    public void loadTransactions() {
+        this.transactions = new ArrayList<>(BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ?", getId().toString()));
+    }
+
+    public void registerTransaction(BankAccountTransaction transaction) {
+        this.transactions.add(transaction);
+        double amount = transaction.getAmount();
+        if(amount < 0) {
+            this.transactionsNumber++;
+            this.transactionsAmount -= transaction.getAmount();
+        }
+        this.balance += amount;
+    }
+
+    public void removeTransaction(BankAccountTransaction transaction) {
+        this.transactions.remove(transaction);
+        double amount = transaction.getAmount();
+        if(amount < 0) {
+            this.transactionsNumber--;
+            this.transactionsAmount += transaction.getAmount();
+        }
+        this.balance -= amount;
     }
 }

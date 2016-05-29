@@ -12,10 +12,9 @@ import com.antypaymentguard.adapters.BankAccountSectionAdapter;
 
 import com.antypaymentguard.R;
 import com.antypaymentguard.models.BankAccount;
-import com.antypaymentguard.models.Transaction;
+import com.antypaymentguard.models.BankAccountTransaction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BankAccountActivity extends AppCompatActivity {
     private BankAccountSectionAdapter mSectionsPagerAdapter;
@@ -31,8 +30,7 @@ public class BankAccountActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         BankAccount bankAccount = (BankAccount) getIntent().getSerializableExtra("bankAccount");
-        ArrayList<Transaction> transactions = (ArrayList<Transaction>) getIntent().getSerializableExtra("transactions");
-        mSectionsPagerAdapter = new BankAccountSectionAdapter(getSupportFragmentManager(), this, bankAccount, transactions);
+        mSectionsPagerAdapter = new BankAccountSectionAdapter(getSupportFragmentManager(), this, bankAccount);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);

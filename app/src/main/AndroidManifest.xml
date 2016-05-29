@@ -47,19 +47,17 @@
                 android:value=".activities.MainActivity" />
         </activity>
         <meta-data
-            android:name="AA_DB_NAME"
-            android:value="APG.db" />
+            android:name="DATABASE"
+            android:value="apg1.db" />
         <meta-data
-            android:name="AA_DB_VERSION"
+            android:name="VERSION"
             android:value="1" />
         <meta-data
-            android:name="AA_MODELS"
-            android:value="com.antypaymentguard.models.Bank,
-            com.antypaymentguard.models.BankAccount,
-            com.antypaymentguard.models.Transaction,
-            com.antypaymentguard.models.conditions.Condition,
-            com.antypaymentguard.models.conditions.AmountCondition,
-            com.antypaymentguard.models.conditions.NumberCondition" />
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.antypaymentguard.models" />
     </application>
 
 </manifest>

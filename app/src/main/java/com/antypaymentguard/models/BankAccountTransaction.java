@@ -1,8 +1,6 @@
 package com.antypaymentguard.models;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
+import com.orm.SugarRecord;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -11,29 +9,21 @@ import java.util.Date;
 /**
  * @author Kamil Walkowiak
  */
-@Table(name = "Transactions")
-public class Transaction extends Model implements Serializable {
-    @Column(name = "Title")
+public class BankAccountTransaction extends SugarRecord implements Serializable {
     private String title;
-    @Column(name = "Date")
     private Date date;
-    @Column(name = "Amount")
     private Double amount;
-    @Column(name = "Party")
     private String party;
-    @Column(name = "PartyIban")
     private String partyIban;
-    @Column(name = "Kind")
     private String kind;
 
-    @Column(name = "BankAccount", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     private BankAccount bankAccount;
 
-    public Transaction() {
+    public BankAccountTransaction() {
         super();
     }
 
-    public Transaction(String title, Date date, Double amount, String party, String partyIban, String kind, BankAccount bankAccount) {
+    public BankAccountTransaction(String title, Date date, Double amount, String party, String partyIban, String kind, BankAccount bankAccount) {
         super();
         this.title = title;
         this.date = date;

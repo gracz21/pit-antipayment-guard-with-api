@@ -1,14 +1,9 @@
 package com.antypaymentguard.models.conditions;
 
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-
 /**
  * @author Kamil Walkowiak
  */
-@Table(name = "NumberCondition")
 public class NumberCondition extends Condition {
-    @Column(name = "NumberOfTransactions")
     private int numberOfTransactions;
 
     public NumberCondition() {

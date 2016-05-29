@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.activeandroid.query.Select;
 import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankAccountListViewAdapter;
 import com.antypaymentguard.api.Loader;
@@ -18,6 +17,8 @@ import com.antypaymentguard.dialogs.ConditionDialog;
 import com.antypaymentguard.dialogs.DialogBuilder;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String bankName = getIntent().getExtras().getString("bankName");
-        bank = new Select().from(Bank.class).where("Name = ?", bankName).executeSingle();
+        bank = Select.from(Bank.class).where(Condition.prop("name").eq(bankName)).first();
         List<BankAccount> bankAccounts = Loader.getAccounts();
 
         adapter = new BankAccountListViewAdapter(this, bankAccounts);
