@@ -120,7 +120,7 @@ public class BankAccount implements Serializable {
     }
 
     public List<BankAccountTransaction> getCurrentMonthTransactions() {
-        return BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ?", getId().toString());
+        return currentMonthTransactions;
     }
 
     public String getBalanceWithCurrencyName() {
