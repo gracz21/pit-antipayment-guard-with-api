@@ -179,4 +179,20 @@ public class BankAccount implements Serializable {
             this.numberCondition.countStatus(this.currentMonthTransactions);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BankAccount that = (BankAccount) o;
+
+        return iban.equals(that.iban);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return iban.hashCode();
+    }
 }

@@ -1,6 +1,7 @@
 package com.antypaymentguard.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,12 +21,14 @@ import com.antypaymentguard.models.BankAccount;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddBankAccountActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private BankAccountListViewAdapter adapter;
     private Bank bank;
+    private List<BankAccount> bankAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +38,14 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String bankName = getIntent().getExtras().getString("bankName");
-        bank = Select.from(Bank.class).where(Condition.prop("name").eq(bankName)).first();
-        List<BankAccount> bankAccounts = Loader.getAccounts();
-
-        adapter = new BankAccountListViewAdapter(this, bankAccounts);
+        this.bankAccounts = new ArrayList<>();
+        adapter = new BankAccountListViewAdapter(this, this.bankAccounts);
         ListView bankAccountsListView = (ListView) findViewById(R.id.bankAccountsListView);
         bankAccountsListView.setAdapter(adapter);
         bankAccountsListView.setOnItemClickListener(this);
+
+        String bankName = getIntent().getExtras().getString("bankName");
+        (new LoadAccounts()).execute(bankName);
     }
 
     @Override
@@ -67,5 +70,21 @@ public class AddBankAccountActivity extends AppCompatActivity implements Adapter
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         adapter.getItem(position).setBank(bank);
         ConditionDialog.show(this, adapter.getItem(position));
+    }
+
+    private class LoadAccounts extends AsyncTask<String, Void, List<BankAccount>> {
+        @Override
+        protected List<BankAccount> doInBackground(String... params) {
+            bank = Select.from(Bank.class).where(Condition.prop("name").eq(params[0])).first();
+            List<BankAccount> loadedBankAccounts = Loader.getAccounts();
+            loadedBankAccounts.removeAll(bank.getBankAccounts());
+            return loadedBankAccounts;
+        }
+
+        @Override
+        protected void onPostExecute(List<BankAccount> loadedBankAccounts) {
+            bankAccounts.addAll(loadedBankAccounts);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
