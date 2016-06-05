@@ -38,16 +38,6 @@ public class BankAccountActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        if (TimeSharedPreferences.getLastTime(String.valueOf(bankAccount.getId())) == 0) {
-            final List<BankAccountTransaction> transactions = Loader.getTransactions();
-            for (BankAccountTransaction transaction : transactions) {
-                transaction.setBankAccount(bankAccount);
-                transaction.save();
-            }
-
-            TimeSharedPreferences.change().setKey(String.valueOf(bankAccount.getId())).commit();
-        }
     }
 
 

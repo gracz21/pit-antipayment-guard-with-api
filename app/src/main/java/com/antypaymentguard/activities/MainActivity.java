@@ -11,9 +11,12 @@ import android.widget.ExpandableListView;
 
 import com.antypaymentguard.R;
 import com.antypaymentguard.adapters.BankExpandableListViewAdapter;
+import com.antypaymentguard.api.Loader;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
+import com.antypaymentguard.models.BankAccountTransaction;
 import com.antypaymentguard.notification.Notifier;
+import com.antypaymentguard.shared.TimeSharedPreferences;
 import com.orm.query.Select;
 
 import java.util.ArrayList;
@@ -89,6 +92,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             listDataHeader.addAll(hashMap.keySet());
             listDataChild.putAll(hashMap);
             adapter.notifyDataSetChanged();
+
+            for(List<BankAccount> bankAccountList: hashMap.values()) {
+                for (BankAccount bankAccount: bankAccountList) {
+                    if (TimeSharedPreferences.getLastTime(String.valueOf(bankAccount.getId())) == 0) {
+                        final List<BankAccountTransaction> transactions = Loader.getTransactions();
+                        for (BankAccountTransaction transaction : transactions) {
+                            transaction.setBankAccount(bankAccount);
+                            transaction.save();
+                        }
+
+                        TimeSharedPreferences.change().setKey(String.valueOf(bankAccount.getId())).commit();
+                    }
+                }
+            }
         }
     }
 }
