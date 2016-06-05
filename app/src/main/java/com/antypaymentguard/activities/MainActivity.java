@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         TimeSharedPreferences.change().setKey(String.valueOf(bankAccount.getId())).commit();
                     }
+                    bankAccount.loadCurrentMonthTransactions();
                 }
             }
         }

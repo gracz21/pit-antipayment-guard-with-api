@@ -1,18 +1,26 @@
 package com.antypaymentguard.models.conditions;
 
+import com.antypaymentguard.models.BankAccountTransaction;
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
+
+import java.util.List;
+
 /**
  * @author Kamil Walkowiak
  */
-public class NumberCondition extends Condition {
+public class NumberCondition extends SugarRecord implements Condition {
     private int numberOfTransactions;
+    @Ignore
+    private int conditionStatus;
 
     public NumberCondition() {
-        super();
+
     }
 
     public NumberCondition(int numberOfTransactions) {
-        super();
         this.numberOfTransactions = numberOfTransactions;
+        this.conditionStatus = 0;
     }
 
     public int getNumberOfTransactions() {
@@ -20,12 +28,21 @@ public class NumberCondition extends Condition {
     }
 
     @Override
-    public boolean checkCondition() {
-        return false;
+    public void countStatus(List<BankAccountTransaction> transactions) {
+        for(BankAccountTransaction transaction: transactions) {
+            if(transaction.getAmount() < 0) {
+                conditionStatus++;
+            }
+        }
     }
 
     @Override
-    public String toString() {
-        return Integer.toString(numberOfTransactions);
+    public String getStatusString() {
+        return Integer.toString(conditionStatus) + "/" + Integer.toString(numberOfTransactions);
+    }
+
+    @Override
+    public boolean checkCondition() {
+        return conditionStatus >= numberOfTransactions;
     }
 }

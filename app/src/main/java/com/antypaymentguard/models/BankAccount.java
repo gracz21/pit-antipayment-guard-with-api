@@ -11,6 +11,7 @@ import com.orm.dsl.Table;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -31,13 +32,7 @@ public class BankAccount implements Serializable {
     private NumberCondition numberCondition;
 
     @Ignore
-    private boolean isConditionFulfilled;
-    @Ignore
-    private int transactionsNumber;
-    @Ignore
-    private double transactionsAmount;
-    @Ignore
-    private ArrayList<BankAccountTransaction> transactions;
+    private ArrayList<BankAccountTransaction> currentMonthTransactions;
 
     public void setBank(Bank bank) {
         this.bank = bank;
@@ -57,9 +52,6 @@ public class BankAccount implements Serializable {
         this.bank = bank;
         this.amountCondition = condition;
         this.numberCondition = null;
-        this.isConditionFulfilled = false;
-        this.transactionsNumber = 0;
-        this.transactionsAmount = 0.0;
     }
 
     public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank, NumberCondition condition) {
@@ -72,9 +64,6 @@ public class BankAccount implements Serializable {
         this.bank = bank;
         this.numberCondition = condition;
         this.amountCondition = null;
-        this.isConditionFulfilled = false;
-        this.transactionsNumber = 0;
-        this.transactionsAmount = 0.0;
     }
 
     public BankAccount(String name, String iban, String currencyName, double balance, String owner, Bank bank) {
@@ -115,15 +104,11 @@ public class BankAccount implements Serializable {
     }
 
     public boolean isConditionFulfilled() {
-        return isConditionFulfilled;
-    }
-
-    public int getTransactionsNumber() {
-        return transactionsNumber;
-    }
-
-    public double getTransactionsAmount() {
-        return transactionsAmount;
+        if(amountCondition != null) {
+            return amountCondition.checkCondition();
+        } else {
+            return numberCondition.checkCondition();
+        }
     }
 
     public Condition getCondition() {
@@ -134,18 +119,7 @@ public class BankAccount implements Serializable {
         }
     }
 
-    public String getConditionStatus() {
-        if(amountCondition != null) {
-            DecimalFormat df = new DecimalFormat();
-            df.setMinimumFractionDigits(2);
-            df.setMaximumFractionDigits(2);
-            return df.format(transactionsAmount);
-        } else {
-            return Integer.toString(transactionsNumber);
-        }
-    }
-
-    public List<BankAccountTransaction> getTransactions() {
+    public List<BankAccountTransaction> getCurrentMonthTransactions() {
         return BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ?", getId().toString());
     }
 
@@ -187,26 +161,22 @@ public class BankAccount implements Serializable {
     }
 
     public void loadTransactions() {
-        this.transactions = new ArrayList<>(BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ?", getId().toString()));
+        this.currentMonthTransactions = new ArrayList<>(BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ?", getId().toString()));
     }
 
-    public void registerTransaction(BankAccountTransaction transaction) {
-        this.transactions.add(transaction);
-        double amount = transaction.getAmount();
-        if(amount < 0) {
-            this.transactionsNumber++;
-            this.transactionsAmount -= transaction.getAmount();
+    public void loadCurrentMonthTransactions() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.MILLISECOND);
+        calendar.set(Calendar.DATE, 1);
+        this.currentMonthTransactions = new ArrayList<>(BankAccountTransaction.find(BankAccountTransaction.class, "bank_account = ? and date >= ?",
+                getId().toString(), Long.toString(calendar.getTimeInMillis())));
+        if(this.amountCondition != null) {
+            this.amountCondition.countStatus(this.currentMonthTransactions);
+        } else {
+            this.numberCondition.countStatus(this.currentMonthTransactions);
         }
-        this.balance += amount;
-    }
-
-    public void removeTransaction(BankAccountTransaction transaction) {
-        this.transactions.remove(transaction);
-        double amount = transaction.getAmount();
-        if(amount < 0) {
-            this.transactionsNumber--;
-            this.transactionsAmount += transaction.getAmount();
-        }
-        this.balance -= amount;
     }
 }

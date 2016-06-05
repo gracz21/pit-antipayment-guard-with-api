@@ -86,8 +86,7 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
         } else {
             childViewHolder.bankAccountIconImageView.setImageResource(R.drawable.ic_bank_account_not_fulfilled_48dp);
             childViewHolder.remainingTextView.setTextColor(ContextCompat.getColor(context, R.color.red));
-            status = context.getString(R.string.remained) + ": " + bankAccount.getConditionStatus()
-                    + "/" + bankAccount.getCondition().toString();
+            status = context.getString(R.string.remained) + ": " + bankAccount.getCondition().getStatusString();
             if(bankAccount.getCondition().getClass() == AmountCondition.class) {
                 status += " " + bankAccount.getCurrencyName();
             } else {

@@ -1,16 +1,15 @@
 package com.antypaymentguard.models.conditions;
 
-import com.orm.SugarRecord;
+import com.antypaymentguard.models.BankAccountTransaction;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Kamil Walkowiak
  */
-public abstract class Condition extends SugarRecord implements Serializable {
-    public Condition() {
-        super();
-    }
-
-    public abstract boolean checkCondition();
+public interface Condition extends Serializable {
+    public void countStatus(List<BankAccountTransaction> transactions);
+    public String getStatusString();
+    public boolean checkCondition();
 }

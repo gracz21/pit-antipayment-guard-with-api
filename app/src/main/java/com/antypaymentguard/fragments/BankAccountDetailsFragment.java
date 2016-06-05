@@ -49,7 +49,7 @@ public class BankAccountDetailsFragment extends Fragment {
 
         TextView conditionStatusTextView = (TextView) view.findViewById(R.id.conditionStatusTextView);
         ImageView conditionStatusIcon = (ImageView) view.findViewById(R.id.conditionStatusIconImageView);
-        String status = bankAccount.getConditionStatus() + "/" + bankAccount.getCondition().toString();
+        String status = bankAccount.getCondition().getStatusString();
         if(bankAccount.getCondition().getClass() == AmountCondition.class) {
             status += " " + bankAccount.getCurrencyName();
         } else {
