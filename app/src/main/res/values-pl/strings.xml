@@ -29,4 +29,10 @@
     <string name="condition_fulfilled">Warunek spełniony</string>
     <string name="remained">Pozostało</string>
     <string name="transactions">transackji</string>
+    <string name="bank_account">Konto bankowe</string>
+    <string name="title_activity_bank_account_transaction">Szczegóły transakcji</string>
+    <string name="date">Data</string>
+    <string name="party">Strona</string>
+    <string name="party_iban">IBAN strony</string>
+    <string name="kind">Rodzaj</string>
 </resources>

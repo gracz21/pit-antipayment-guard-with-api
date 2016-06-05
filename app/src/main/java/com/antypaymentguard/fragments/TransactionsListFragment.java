@@ -1,14 +1,18 @@
 package com.antypaymentguard.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.antypaymentguard.R;
+import com.antypaymentguard.activities.BankAccountTransactionActivity;
 import com.antypaymentguard.adapters.TransactionListViewAdapter;
+import com.antypaymentguard.models.BankAccount;
 import com.antypaymentguard.models.BankAccountTransaction;
 
 import java.util.ArrayList;
@@ -36,9 +40,18 @@ public class TransactionsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions_list, container, false);
-        TransactionListViewAdapter adapter = new TransactionListViewAdapter(getContext(), bankAccountTransactions);
+        final TransactionListViewAdapter adapter = new TransactionListViewAdapter(getContext(), bankAccountTransactions);
         ListView transactionListView = (ListView) view.findViewById(R.id.transactionListView);
         transactionListView.setAdapter(adapter);
+        transactionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BankAccountTransaction selectedTransaction = adapter.getItem(position);
+                Intent intent = new Intent(view.getContext(), BankAccountTransactionActivity.class);
+                intent.putExtra("transaction", selectedTransaction);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

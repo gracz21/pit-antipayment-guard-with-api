@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.BankAccountTransactionActivity"
+    tools:showIn="@layout/activity_bank_account_transaction">
+
+    <TextView
+        android:id="@+id/nameTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+
+        android:textSize="@dimen/material_text_display1"
+        android:singleLine="true"
+        android:text="New Text" />
+
+    <ImageView
+        android:id="@+id/bankAccountIconImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/nameTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+
+        android:src="@drawable/ic_iban_24dp"/>
+
+    <TextView
+        android:id="@+id/bankAccountTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/nameTextView"
+        android:layout_toRightOf="@id/bankAccountIconImageView"
+        android:layout_toEndOf="@id/bankAccountIconImageView"
+
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/material_text_title"
+        android:text="New Text" />
+
+    <TextView
+        android:id="@+id/bankAccountLabelTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/bankAccountTextView"
+        android:layout_toRightOf="@id/bankAccountIconImageView"
+        android:layout_toEndOf="@id/bankAccountIconImageView"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:text="@string/bank_account" />
+
+    <ImageView
+        android:id="@+id/amountIconImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/bankAccountLabelTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+
+        android:src="@drawable/ic_amount_24dp"/>
+
+    <TextView
+        android:id="@+id/amountTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/bankAccountLabelTextView"
+        android:layout_toRightOf="@id/amountIconImageView"
+        android:layout_toEndOf="@id/amountIconImageView"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/material_text_title"
+        android:text="New Text"/>
+
+    <TextView
+        android:id="@+id/amountLabelTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/amountTextView"
+        android:layout_toRightOf="@id/amountIconImageView"
+        android:layout_toEndOf="@id/amountIconImageView"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:text="@string/amount" />
+
+    <ImageView
+        android:id="@+id/dateIconImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/amountLabelTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+
+        android:src="@drawable/ic_date_24dp"/>
+
+    <TextView
+        android:id="@+id/dateTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/amountLabelTextView"
+        android:layout_toRightOf="@id/dateIconImageView"
+        android:layout_toEndOf="@id/dateIconImageView"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/material_text_title"
+        android:text="New Text"/>
+
+    <TextView
+        android:id="@+id/dateLabelTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/dateTextView"
+        android:layout_toRightOf="@id/dateIconImageView"
+        android:layout_toEndOf="@id/dateIconImageView"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:text="@string/date" />
+
+    <ImageView
+        android:id="@+id/partyImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/dateLabelTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+
+        android:src="@drawable/ic_party_24dp"/>
+
+    <TextView
+        android:id="@+id/partyTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/dateLabelTextView"
+        android:layout_toRightOf="@id/partyImageView"
+        android:layout_toEndOf="@id/partyImageView"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/material_text_title"
+        android:text="New Text"/>
+
+    <TextView
+        android:id="@+id/partyLabelTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/partyTextView"
+        android:layout_toRightOf="@id/partyImageView"
+        android:layout_toEndOf="@id/partyImageView"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:text="@string/party" />
+
+    <ImageView
+        android:id="@+id/partyIbanIconImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/partyLabelTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+
+        android:src="@drawable/ic_party_iban_24dp"/>
+
+    <TextView
+        android:id="@+id/partyIbanTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/partyLabelTextView"
+        android:layout_toRightOf="@id/partyIbanIconImageView"
+        android:layout_toEndOf="@id/partyIbanIconImageView"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/material_text_title"
+        android:text="New Text"/>
+
+    <TextView
+        android:id="@+id/partyIbanLabelTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/partyIbanTextView"
+        android:layout_toRightOf="@id/partyIbanIconImageView"
+        android:layout_toEndOf="@id/partyIbanIconImageView"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:text="@string/party_iban" />
+
+    <ImageView
+        android:id="@+id/kindIconImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/partyIbanLabelTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+
+        android:src="@drawable/ic_transaction_kind_24dp"/>
+
+    <TextView
+        android:id="@+id/kindTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/partyIbanLabelTextView"
+        android:layout_toRightOf="@id/kindIconImageView"
+        android:layout_toEndOf="@id/kindIconImageView"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/material_text_title"
+        android:text="New Text"/>
+
+    <TextView
+        android:id="@+id/kindLabelTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/kindTextView"
+        android:layout_toRightOf="@id/kindIconImageView"
+        android:layout_toEndOf="@id/kindIconImageView"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+
+        android:text="@string/kind" />
+
+</RelativeLayout>

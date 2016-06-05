@@ -31,4 +31,10 @@
     <string name="condition_fulfilled">Condition fulfilled</string>
     <string name="remained">Remained</string>
     <string name="transactions">transactions</string>
+    <string name="title_activity_bank_account_transaction">Transaction details</string>
+    <string name="bank_account">Bank account</string>
+    <string name="date">Date</string>
+    <string name="party">Party</string>
+    <string name="party_iban">Party IBAN</string>
+    <string name="kind">Kind</string>
 </resources>
