@@ -16,6 +16,7 @@ import com.antypaymentguard.R;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
 import com.antypaymentguard.models.conditions.AmountCondition;
+import com.antypaymentguard.notification.Notifier;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -92,6 +93,8 @@ public class BankExpandableListViewAdapter extends BaseExpandableListAdapter {
             } else {
                 status += " " + context.getString(R.string.transactions);
             }
+
+            Notifier.showNotification(context, 1000 * 30, bankAccount.getName(), status);
         }
         childViewHolder.remainingTextView.setText(status);
 

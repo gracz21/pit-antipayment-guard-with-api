@@ -15,7 +15,6 @@ import com.antypaymentguard.api.Loader;
 import com.antypaymentguard.models.Bank;
 import com.antypaymentguard.models.BankAccount;
 import com.antypaymentguard.models.BankAccountTransaction;
-import com.antypaymentguard.notification.Notifier;
 import com.antypaymentguard.shared.TimeSharedPreferences;
 import com.orm.query.Select;
 
@@ -46,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new BankExpandableListViewAdapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(adapter);
         expandableListView.setOnChildClickListener(this);
-
-        Notifier.showNotification(this, 1000 * 60);
+        for (int i = 0; i < adapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
     }
 
     @Override
@@ -93,16 +93,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             listDataChild.putAll(hashMap);
             adapter.notifyDataSetChanged();
 
-            for(List<BankAccount> bankAccountList: hashMap.values()) {
-                for (BankAccount bankAccount: bankAccountList) {
-                    if (TimeSharedPreferences.getLastTime(String.valueOf(bankAccount.getId())) == 0) {
+            for (List<BankAccount> bankAccountList : hashMap.values()) {
+                for (BankAccount bankAccount : bankAccountList) {
+                    if (TimeSharedPreferences.getLastTime(bankAccount.getIban()) >= 0) {
                         final List<BankAccountTransaction> transactions = Loader.getTransactions();
                         for (BankAccountTransaction transaction : transactions) {
                             transaction.setBankAccount(bankAccount);
                             transaction.save();
                         }
 
-                        TimeSharedPreferences.change().setKey(String.valueOf(bankAccount.getId())).commit();
+                        TimeSharedPreferences.change().setKey(bankAccount.getIban()).commit();
                     }
                     bankAccount.loadCurrentMonthTransactions();
                 }
