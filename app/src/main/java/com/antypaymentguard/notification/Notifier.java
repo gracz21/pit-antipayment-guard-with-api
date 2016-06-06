@@ -44,15 +44,13 @@ public class Notifier {
         boolean isVibrating = (vibesString == null || vibesString.equals("1"));
         Log.d("GCM", "Vibrations are: " + (isVibrating ? "ON" : "OFF"));
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, uniquePushId, intent, PendingIntent.FLAG_ONE_SHOT);
         showNotification(uniquePushId, context, pendingIntent, isVibrating, title, content, priority);
     }
 
-    public static void showNotification(final Context context, final long delay) {
+    public static void showNotification(final Context context, final long delay, String title, String content) {
         final Intent intent = new Intent(context, MainActivity.class);
-        final String title = "Zbliża się okres rozliczniowy";
-        final String content = "Dokanaj płatności, aby uniknąć opłaty!";
-        intent.putExtra(KEY_NOTIFICATION_TITLE, title).putExtra(KEY_NOTIFICATION_CONTENT, content).putExtra(KEY_NOTIFICATION_VIBES, false);
+        intent.putExtra(KEY_NOTIFICATION_TITLE, title).putExtra(KEY_NOTIFICATION_CONTENT, content).putExtra(KEY_NOTIFICATION_VIBES, "true");
 
         showDelayedNotification(context, System.currentTimeMillis() + delay, intent);
     }
@@ -123,7 +121,7 @@ public class Notifier {
     private static PendingIntent createPendingIntent(Context context, Intent intent) {
         Intent intentDelayed = new Intent(context, NotificationAlarmReceiver.class);
         intentDelayed.putExtra(NotificationAlarmReceiver.EXTRA_INTENT, intent);
-        return PendingIntent.getBroadcast(context, 0, intentDelayed, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, new Random().nextInt(), intentDelayed, PendingIntent.FLAG_ONE_SHOT);
     }
 
     public static final String TAG = Notifier.class.getName();
